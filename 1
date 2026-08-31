@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlatMate Kolkata | Verified Flat & Flatmate Matching Platform</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEMES (Warm Yellow & Kolkata Crimson accents)
+       ========================================================================== */
+    :root {
+      --primary: #FFB703;
+      --primary-hover: #FB8500;
+      --primary-rgb: 255, 183, 3;
+      --accent: #D90429;
+      --accent-hover: #EF233C;
+      --bg-body: #F8F9FC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-input: #F1F4F9;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      --header-h: 74px;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #0F172A;
+      --bg-surface: #1E293B;
+      --bg-card: #1E293B;
+      --bg-input: #334155;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-color: #334155;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-title-wrap {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 48px auto;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      background: rgba(217, 4, 41, 0.1);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* ==========================================================================
+       NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.4);
+    }
+    .brand span {
+      color: var(--accent);
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .theme-toggle-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #0F172A;
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.35);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.45);
+    }
+    .btn-accent {
+      background: var(--accent);
+      color: #FFF;
+      box-shadow: 0 4px 12px rgba(217, 4, 41, 0.3);
+    }
+    .btn-accent:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-color);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      background: var(--bg-input);
+      border-color: var(--text-muted);
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       HERO SECTION WITH KOLKATA GRADIENTS
+       ========================================================================== */
+    .hero {
+      position: relative;
+      padding: 80px 0 100px;
+      background: radial-gradient(circle at 80% 20%, rgba(255, 183, 3, 0.12), transparent 40%),
+                  radial-gradient(circle at 10% 80%, rgba(217, 4, 41, 0.08), transparent 45%);
+      overflow: hidden;
+    }
+    .hero-content {
+      text-align: center;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    .kolkata-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kolkata-badge i {
+      color: var(--primary);
+    }
+    .hero h1 {
+      font-size: 3.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary-hover) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Quick Hero Search Box */
+    .hero-search-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 1.4fr 1.1fr 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-input);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+    .search-group:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+    }
+    .search-group i {
+      color: var(--primary-hover);
+      font-size: 1.1rem;
+    }
+    .search-input-wrap {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      width: 100%;
+    }
+    .search-input-wrap label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .search-input-wrap select, .search-input-wrap input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      width: 100%;
+      cursor: pointer;
+    }
+    .hero-search-btn {
+      height: 100%;
+      padding: 0 28px;
+      font-size: 1rem;
+    }
+
+    /* Popular Kolkata Location Chips */
+    .hero-popular-chips {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hero-popular-chips span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .chip:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #0F172A;
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       FIND FLATMATES SECTION WITH FILTERS & GRID
+       ========================================================================== */
+    .listings-section {
+      padding: 60px 0 90px;
+    }
+    .listings-layout {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Filter Sidebar */
+    .filters-sidebar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 94px;
+    }
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .filter-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-reset {
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .filter-reset:hover {
+      text-decoration: underline;
+    }
+    .filter-group {
+      margin-bottom: 20px;
+    }
+    .filter-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .filter-select, .filter-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .filter-select:focus, .filter-input:focus {
+      border-color: var(--primary);
+    }
+    .budget-slider-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .budget-slider {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .budget-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Main Listings Grid Area */
+    .listings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .results-count {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .results-count span {
+      color: var(--accent);
+    }
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sort-wrap label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .flatmates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* Flatmate Profile Card */
+    .flatmate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .flatmate-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+    .card-top {
+      position: relative;
+      height: 140px;
+      background: linear-gradient(135deg, rgba(255, 183, 3, 0.25), rgba(217, 4, 41, 0.2));
+      display: flex;
+      align-items: flex-end;
+      padding: 16px 20px;
+    }
+    .verified-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(16, 185, 129, 0.9);
+      backdrop-filter: blur(4px);
+      color: #FFF;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .bookmark-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .bookmark-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(217, 4, 41, 0.08);
+    }
+    .card-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 3.5px solid var(--bg-card);
+      object-fit: cover;
+      margin-bottom: -38px;
+      position: relative;
+      z-index: 2;
+      box-shadow: var(--shadow-sm);
+      background: #E2E8F0;
+    }
+    .card-body {
+      padding: 46px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .card-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .card-age-gender {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-input);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .card-profession {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-location {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .card-budget {
+      background: var(--bg-input);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .budget-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .budget-amount {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .mini-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--bg-input);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-actions {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .card-actions .btn {
+      padding: 8px 12px;
+      font-size: 0.84rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+    }
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .empty-state h4 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .load-more-wrap {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ==========================================================================
+       POST REQUIREMENT SECTION (FORM)
+       ========================================================================== */
+    .post-section {
+      padding: 80px 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+    .post-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    .form-group label {
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .form-group label span {
+      color: var(--accent);
+    }
+    .form-control {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .form-error {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: none;
+    }
+    .has-error .form-control {
+      border-color: var(--accent);
+    }
+    .has-error .form-error {
+      display: block;
+    }
+
+    /* ==========================================================================
+       HOW IT WORKS
+       ========================================================================== */
+    .how-section {
+      padding: 90px 0;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .step-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .step-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+    }
+    .step-num {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      color: #FFF;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(217, 4, 41, 0.35);
+    }
+    .step-icon-wrap {
+      width: 74px;
+      height: 74px;
+      background: rgba(var(--primary-rgb), 0.15);
+      color: var(--primary-hover);
+      border-radius: 20px;
+      margin: 16px auto 24px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .step-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    /* ==========================================================================
+       SAFETY & VERIFICATION
+       ========================================================================== */
+    .safety-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.98)),
+                  radial-gradient(circle at 100% 0%, rgba(217, 4, 41, 0.3), transparent 60%);
+      color: #FFF;
+      border-radius: var(--radius-lg);
+      margin: 20px auto 80px;
+      max-width: 1240px;
+    }
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .safety-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: left;
+      transition: var(--transition);
+    }
+    .safety-box:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
+    }
+    .safety-box i {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+    .safety-box h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .safety-box p {
+      font-size: 0.85rem;
+      color: #94A3B8;
+    }
+
+    /* ==========================================================================
+       TESTIMONIALS
+       ========================================================================== */
+    .testimonials-section {
+      padding: 70px 0;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .testi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .testi-stars {
+      color: #F59E0B;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .testi-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testi-author {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testi-author img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .testi-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .testi-loc {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION
+       ========================================================================== */
+    .faq-section {
+      padding: 70px 0 100px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+    }
+    .faq-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--bg-card);
+      transition: var(--transition);
+    }
+    .faq-question {
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .faq-question i {
+      color: var(--accent);
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+      padding: 0 24px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 250px;
+      padding-bottom: 20px;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .footer {
+      background: #0B1120;
+      color: #94A3B8;
+      padding: 70px 0 30px;
+      border-top: 1px solid #1E293B;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+    .footer-brand .brand {
+      color: #FFF;
+      margin-bottom: 16px;
+    }
+    .footer-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-width: 320px;
+      margin-bottom: 20px;
+    }
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 38px;
+      height: 38px;
+      background: #1E293B;
+      color: #FFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .social-link:hover {
+      background: var(--primary);
+      color: #0F172A;
+      transform: translateY(-3px);
+    }
+    .footer-col h5 {
+      color: #FFF;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 0.88rem;
+      transition: var(--transition);
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+      padding-left: 4px;
+    }
+    .footer-bottom {
+      border-top: 1px solid #1E293B;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+    }
+
+    /* ==========================================================================
+       MODAL & FLOATING WIDGETS
+       ========================================================================== */
+    /* Profile Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      transform: scale(0.95);
+      transition: var(--transition);
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1rem;
+    }
+    .modal-hero {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      height: 120px;
+    }
+    .modal-header-body {
+      padding: 0 28px;
+      margin-top: -45px;
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+    }
+    .modal-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 4px solid var(--bg-card);
+      object-fit: cover;
+      background: #E2E8F0;
+    }
+    .modal-content-area {
+      padding: 24px 28px 32px;
+    }
+    .modal-tag-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .modal-meta-item {
+      background: var(--bg-input);
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+    }
+    .modal-meta-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .modal-meta-val {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    /* Floating WhatsApp Button */
+    .floating-wa {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #25D366;
+      color: #FFF;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+      z-index: 999;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .floating-wa:hover {
+      transform: scale(1.1) translateY(-4px);
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: 70px;
+      background: #0F172A;
+      color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .floating-wa:hover .wa-tooltip {
+      opacity: 1;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0F172A;
+      color: #FFF;
+      padding: 14px 24px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 3000;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .listings-layout {
+        grid-template-columns: 1fr;
+      }
+      .filters-sidebar {
+        position: static;
+        margin-bottom: 24px;
+      }
+      .steps-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      .safety-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.3rem;
+      }
+      .hero-search-box {
+        grid-template-columns: 1fr;
+      }
+      .nav-menu {
+        position: fixed;
+        top: var(--header-h);
+        left: 0;
+        right: 0;
+        background: var(--bg-surface);
+        flex-direction: column;
+        padding: 30px;
+        box-shadow: var(--shadow-md);
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .nav-menu.active {
+        transform: translateY(0);
+      }
+      .hamburger {
+        display: block;
+      }
+      .post-form-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .safety-grid {
+        grid-template-columns: 1fr;
+      }
+      .modal-tag-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-hotel"></i></div>
+        FlatMate <span>Kolkata</span>
+      </a>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#listings" class="nav-link">Find Flatmate</a></li>
+        <li><a href="#post" class="nav-link">Post Requirement</a></li>
+        <li><a href="#how" class="nav-link">How It Works</a></li>
+        <li><a href="#faq" class="nav-link">FAQs</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="btn btn-primary" onclick="showToast('Login & Registration demo modal is ready!')">
+          <i class="fa-regular fa-user"></i> Login
+        </button>
+        <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== */ -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <div class="kolkata-badge">
+        <i class="fa-solid fa-location-dot"></i> City of Joy's #1 Flatmate Network
+      </div>
+      <h1>Find the Perfect <span>Flatmate</span> in Kolkata</h1>
+      <p>Connect with 10,000+ verified professionals and students looking for shared flats in Salt Lake, New Town, Park Street, and beyond.</p>
+
+      <!-- Hero Search Bar -->
+      <div class="hero-search-box">
+        <div class="search-group">
+          <i class="fa-solid fa-map-pin"></i>
+          <div class="search-input-wrap">
+            <label>Location</label>
+            <select id="heroLocationSelect">
+              <option value="">All Kolkata Areas</option>
+              <option value="New Town">New Town</option>
+              <option value="Salt Lake">Salt Lake (Sec I-V)</option>
+              <option value="Sector V">Sector V (Tech Hub)</option>
+              <option value="Park Street">Park Street</option>
+              <option value="Gariahat">Gariahat</option>
+              <option value="Tollygunge">Tollygunge</option>
+              <option value="Ballygunge">Ballygunge</option>
+              <option value="Behala">Behala</option>
+              <option value="Dum Dum">Dum Dum</option>
+              <option value="Rajarhat">Rajarhat</option>
+              <option value="Howrah">Howrah</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-group">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          <div class="search-input-wrap">
+            <label>Max Budget</label>
+            <select id="heroBudgetSelect">
+              <option value="25000">Any Budget</option>
+              <option value="8000">Under ₹8,000</option>
+              <option value="12000">Under ₹12,000</option>
+              <option value="16000">Under ₹16,000</option>
+              <option value="20000">Under ₹20,000</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-group">
+          <i class="fa-solid fa-users"></i>
+          <div class="search-input-wrap">
+            <label>Looking For</label>
+            <select id="heroGenderSelect">
+              <option value="all">Any Gender</option>
+              <option value="Male">Male Flatmate</option>
+              <option value="Female">Female Flatmate</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-accent hero-search-btn" id="heroSearchBtn">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+
+      <!-- Quick Location Chips -->
+      <div class="hero-popular-chips">
+        <span>Popular:</span>
+        <div class="chip" onclick="quickFilterLocation('New Town')">New Town</div>
+        <div class="chip" onclick="quickFilterLocation('Salt Lake')">Salt Lake</div>
+        <div class="chip" onclick="quickFilterLocation('Sector V')">Sector V</div>
+        <div class="chip" onclick="quickFilterLocation('Tollygunge')">Tollygunge</div>
+        <div class="chip" onclick="quickFilterLocation('Park Street')">Park Street</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FLATMATE LISTINGS & FILTERS SECTION
+       ========================================================================== -->
+  <section class="listings-section" id="listings">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Verified Matches</span>
+        <h2 class="section-title">Explore Compatible Flatmates</h2>
+        <p class="section-subtitle">Real people with matching lifestyles, budgets, and location preferences across Kolkata.</p>
+      </div>
+
+      <div class="listings-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar">
+          <div class="filter-header">
+            <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
+            <button class="filter-reset" id="resetFiltersBtn">Reset All</button>
+          </div>
+
+          <!-- Location -->
+          <div class="filter-group">
+            <label for="filterLocation">Location</label>
+            <select id="filterLocation" class="filter-select">
+              <option value="">All Kolkata</option>
+              <option value="New Town">New Town</option>
+              <option value="Salt Lake">Salt Lake</option>
+              <option value="Sector V">Sector V</option>
+              <option value="Park Street">Park Street</option>
+              <option value="Gariahat">Gariahat</option>
+              <option value="Tollygunge">Tollygunge</option>
+              <option value="Ballygunge">Ballygunge</option>
+              <option value="Behala">Behala</option>
+              <option value="Dum Dum">Dum Dum</option>
+              <option value="Rajarhat">Rajarhat</option>
+              <option value="Howrah">Howrah</option>
+            </select>
+          </div>
+
+          <!-- Budget Slider -->
+          <div class="filter-group">
+            <label>Max Budget: <span class="budget-val" id="budgetValue">₹25,000/mo</span></label>
+            <div class="budget-slider-wrap">
+              <input type="range" id="filterBudget" class="budget-slider" min="4000" max="25000" step="1000" value="25000">
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="filter-group">
+            <label for="filterGender">Gender</label>
+            <select id="filterGender" class="filter-select">
+              <option value="all">Any Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <!-- Occupation -->
+          <div class="filter-group">
+            <label for="filterProfession">Occupation Type</label>
+            <select id="filterProfession" class="filter-select">
+              <option value="all">All Occupations</option>
+              <option value="Professional">Working Professional</option>
+              <option value="Student">Student</option>
+            </select>
+          </div>
+
+          <!-- Lifestyle / Habits Checkboxes -->
+          <div class="filter-group">
+            <label>Lifestyle & Habits</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterNonSmoker"> Non-smoker only
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterVeg"> Veg only
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="filterPetFriendly"> Pet Friendly
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Listings Main Area -->
+        <main class="listings-main">
+          <div class="listings-header">
+            <div class="results-count">
+              Showing <span id="matchCount">0</span> flatmates in Kolkata
+            </div>
+            <div class="sort-wrap">
+              <label for="sortSelect">Sort By:</label>
+              <select id="sortSelect" class="filter-select" style="width: auto; padding: 6px 12px;">
+                <option value="recommended">Recommended</option>
+                <option value="budget-low">Budget: Low to High</option>
+                <option value="budget-high">Budget: High to Low</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="flatmates-grid" id="flatmatesGrid">
+            <!-- Dynamic Profiles will be injected here via JS -->
+          </div>
+
+          <!-- Load More Button -->
+          <div class="load-more-wrap" id="loadMoreWrap">
+            <button class="btn btn-outline" id="loadMoreBtn" onclick="handleLoadMore()">
+              <i class="fa-solid fa-arrows-rotate"></i> Load More Profiles
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       POST A FLAT / REQUIREMENT SECTION
+       ========================================================================== -->
+  <section class="post-section" id="post">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Find A Roommate Fast</span>
+        <h2 class="section-title">Post Your Requirement</h2>
+        <p class="section-subtitle">Looking for someone to share your flat or searching for a room? Post your requirement for free.</p>
+      </div>
+
+      <div class="form-container">
+        <form id="postRequirementForm" novalidate>
+          <div class="post-form-grid">
+            <div class="form-group">
+              <label for="postName">Full Name <span>*</span></label>
+              <input type="text" id="postName" class="form-control" placeholder="e.g. Anirban Mukherjee" required>
+              <div class="form-error">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postAge">Age <span>*</span></label>
+              <input type="number" id="postAge" class="form-control" min="18" max="70" placeholder="e.g. 25" required>
+              <div class="form-error">Please enter a valid age (18+)</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postGender">Your Gender <span>*</span></label>
+              <select id="postGender" class="form-control" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Other</option>
+              </select>
+              <div class="form-error">Please select gender</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postProfession">Profession / Company <span>*</span></label>
+              <input type="text" id="postProfession" class="form-control" placeholder="e.g. TCS Sector V / Student" required>
+              <div class="form-error">Please enter your profession</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postLocation">Preferred Location <span>*</span></label>
+              <select id="postLocation" class="form-control" required>
+                <option value="">Select Kolkata Area</option>
+                <option value="New Town">New Town</option>
+                <option value="Salt Lake">Salt Lake</option>
+                <option value="Sector V">Sector V</option>
+                <option value="Park Street">Park Street</option>
+                <option value="Gariahat">Gariahat</option>
+                <option value="Tollygunge">Tollygunge</option>
+                <option value="Ballygunge">Ballygunge</option>
+                <option value="Behala">Behala</option>
+                <option value="Dum Dum">Dum Dum</option>
+                <option value="Rajarhat">Rajarhat</option>
+                <option value="Howrah">Howrah</option>
+              </select>
+              <div class="form-error">Please choose a location</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postBudget">Monthly Budget (₹) <span>*</span></label>
+              <input type="number" id="postBudget" class="form-control" placeholder="e.g. 9500" required>
+              <div class="form-error">Please enter your budget</div>
+            </div>
+
+            <div class="form-group">
+              <label for="postMoveDate">Target Move-in Date</label>
+              <input type="date" id="postMoveDate" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="postFlatmatePref">Looking For Flatmate</label>
+              <select id="postFlatmatePref" class="form-control">
+                <option value="Any">Any Gender</option>
+                <option value="Male">Male Only</option>
+                <option value="Female">Female Only</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="postAbout">About Yourself & Lifestyle Preferences</label>
+              <textarea id="postAbout" class="form-control" placeholder="Tell potential flatmates about your daily schedule, cleanliness, hobbies, or food choices..."></textarea>
+            </div>
+
+            <div class="form-group full">
+              <button type="submit" class="btn btn-accent" style="width: 100%; padding: 14px;">
+                <i class="fa-solid fa-paper-plane"></i> Publish Requirement
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       HOW IT WORKS SECTION
+       ========================================================================== -->
+  <section class="how-section" id="how">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Seamless Process</span>
+        <h2 class="section-title">How FlatMate Kolkata Works</h2>
+        <p class="section-subtitle">Finding a compatible flatmate shouldn't take weeks. Get matched in 3 simple steps.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon-wrap"><i class="fa-regular fa-id-badge"></i></div>
+          <h3>Create Your Profile</h3>
+          <p>Share your budget, preferred Kolkata neighborhood, workplace, and lifestyle preferences in under 2 minutes.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon-wrap"><i class="fa-solid fa-sliders"></i></div>
+          <h3>Filter & Discover</h3>
+          <p>Browse through verified listings matching your budget, dietary habits, work shifts, and pet preferences.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon-wrap"><i class="fa-solid fa-handshake-angle"></i></div>
+          <h3>Connect & Move In</h3>
+          <p>Chat directly, schedule a quick chai or flat visit, finalize the agreement, and split your rent with ease.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SAFETY & VERIFICATION
+       ========================================================================== -->
+  <section class="container">
+    <div class="safety-section">
+      <div class="container" style="padding: 0 32px;">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+          <span class="section-tag" style="background: rgba(255, 183, 3, 0.2); color: var(--primary);">Peace of Mind</span>
+          <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;">Your Safety Matters To Us</h2>
+          <p style="color: #94A3B8;">We implement strict verification standards to keep Kolkata's renting community secure.</p>
+        </div>
+
+        <div class="safety-grid">
+          <div class="safety-box">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h4>Government ID Check</h4>
+            <p>Users can verify their profile via Aadhaar or Corporate Work Email authentication.</p>
+          </div>
+          <div class="safety-box">
+            <i class="fa-solid fa-lock"></i>
+            <h4>Privacy Protection</h4>
+            <p>Your phone number and precise address remain confidential until you choose to connect.</p>
+          </div>
+          <div class="safety-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h4>Report & Block</h4>
+            <p>One-click flagging for suspicious behavior with swift manual review by our Kolkata team.</p>
+          </div>
+          <div class="safety-box">
+            <i class="fa-solid fa-circle-check"></i>
+            <h4>Zero Brokerage</h4>
+            <p>Direct peer-to-peer flatmate matching without paying 1 month's broker commission.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TESTIMONIALS SECTION
+       ========================================================================== -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Success Stories</span>
+        <h2 class="section-title">Loved by Kolkata's Renters</h2>
+        <p class="section-subtitle">Real feedback from professionals and university students who found great homes.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testi-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">"Relocated from Bangalore to Sector V for my IT job. Found an amazing 2BHK flatmate in New Town Action Area 1 within 3 days. Clean platform and zero broker hassle!"</p>
+          <div class="testi-author">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Debolina">
+            <div>
+              <div class="testi-name">Debolina Sen</div>
+              <div class="testi-loc">New Town, Kolkata</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">"As a Jadavpur University scholar, my budget was strict (₹6k). The budget filters worked like a charm and matched me with a fellow researcher near Tollygunge metro."</p>
+          <div class="testi-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Souvik">
+            <div>
+              <div class="testi-name">Souvik Banerjee</div>
+              <div class="testi-loc">Tollygunge, Kolkata</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testi-text">"I have a golden retriever, and finding pet-friendly flatmates in Salt Lake was impossible until I used the lifestyle filters here. Moving into our CC Block flat next week!"</p>
+          <div class="testi-author">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" alt="Pooja">
+            <div>
+              <div class="testi-name">Pooja Ganguly</div>
+              <div class="testi-loc">Salt Lake Block CC</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FAQ ACCORDION SECTION
+       ========================================================================== -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about finding flatmates across Kolkata.</p>
+      </div>
+
+      <div class="faq-wrap">
+        <div class="faq-item active">
+          <div class="faq-question">
+            <span>Is FlatMate Kolkata completely free to use?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Yes! Browsing, filtering profiles, and posting your flatmate requirements are 100% free with zero brokerage.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do you verify users on the platform?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            We verify users through corporate email addresses, LinkedIn profiles, and optional Government ID verification (Aadhaar/Voter ID) to ensure a secure community.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I search specifically in IT hubs like Salt Lake Sector V or New Town?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Absolutely. We have specialized filters covering major Kolkata residential & IT belts including New Town Action Areas I-III, Salt Lake Sector I-V, Rajarhat, and South Kolkata hubs like Gariahat and Tollygunge.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How can I contact potential flatmates safely?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            You can click on the "Contact" button on any verified card to initiate an in-platform chat or request their verified WhatsApp/phone contact.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-hotel"></i></div>
+            FlatMate <span>Kolkata</span>
+          </div>
+          <p class="footer-desc">Kolkata’s dedicated community platform making shared living simple, safe, and broker-free.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Popular Locations</h5>
+          <ul class="footer-links">
+            <li><a href="#listings" onclick="quickFilterLocation('New Town')">Flats in New Town</a></li>
+            <li><a href="#listings" onclick="quickFilterLocation('Salt Lake')">Flats in Salt Lake</a></li>
+            <li><a href="#listings" onclick="quickFilterLocation('Sector V')">Sector V IT Hub</a></li>
+            <li><a href="#listings" onclick="quickFilterLocation('Tollygunge')">Tollygunge Metro</a></li>
+            <li><a href="#listings" onclick="quickFilterLocation('Park Street')">Central Park Street</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#listings">Find Flatmates</a></li>
+            <li><a href="#post">Post Requirement</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#faq">Safety Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact Kolkata Office</h5>
+          <p style="font-size: 0.88rem; line-height: 1.6; margin-bottom: 10px;">
+            <i class="fa-solid fa-location-dot" style="color: var(--primary); margin-right: 6px;"></i>
+            Godrej Waterside, Sector V, Salt Lake, Kolkata 700091
+          </p>
+          <p style="font-size: 0.88rem; line-height: 1.6;">
+            <i class="fa-solid fa-envelope" style="color: var(--primary); margin-right: 6px;"></i>
+            contact@flatmatekolkata.in
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 FlatMate Kolkata. All rights reserved. Built with ❤️ in Bengal.</div>
+        <div style="display: flex; gap: 20px;">
+          <a href="#" style="color: #64748B;">Privacy Policy</a>
+          <a href="#" style="color: #64748B;">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL: DETAILED PROFILE VIEW
+       ========================================================================== -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-card">
+      <button class="modal-close" id="modalCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-hero"></div>
+      <div class="modal-header-body">
+        <img src="" alt="Profile" class="modal-avatar" id="modalAvatar">
+        <div>
+          <h3 id="modalName" style="font-size: 1.4rem; font-weight: 800;"></h3>
+          <p id="modalSub" style="font-size: 0.88rem; color: var(--accent); font-weight: 600;"></p>
+        </div>
+      </div>
+
+      <div class="modal-content-area">
+        <div class="modal-tag-grid">
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Location</div>
+            <div class="modal-meta-val" id="modalLoc"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Budget</div>
+            <div class="modal-meta-val" id="modalBudget"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Looking For</div>
+            <div class="modal-meta-val" id="modalPref"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Move-In Date</div>
+            <div class="modal-meta-val" id="modalMoveIn">Immediate</div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">About & Preferences</h4>
+        <p id="modalDesc" style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 24px;"></p>
+
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn-primary" style="flex: 1;" onclick="handleDirectContact()">
+            <i class="fa-solid fa-message"></i> Send Message
+          </button>
+          <button class="btn btn-accent" style="flex: 1;" onclick="handleDirectCall()">
+            <i class="fa-solid fa-phone"></i> Request Contact
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Action -->
+  <div class="floating-wa" onclick="showToast('Connecting you with FlatMate Kolkata Support on WhatsApp...')">
+    <span class="wa-tooltip">Chat with Support</span>
+    <i class="fa-brands fa-whatsapp"></i>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-msg" id="toastBox">
+    <i class="fa-solid fa-circle-check" style="color: #10B981;"></i>
+    <span id="toastText">Action completed successfully!</span>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: LOCAL DATA, FILTERING, MODALS & INTERACTIONS
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. SAMPLE DATA: 10 Realistic Kolkata Flatmate Profiles
+       -------------------------------------------------------------------------- */
+    const flatmateData = [
+      {
+        id: 1,
+        name: "Rahul Sharma",
+        age: 24,
+        gender: "Male",
+        type: "Professional",
+        profession: "Software Developer @ Cognizant",
+        location: "New Town",
+        budget: 11000,
+        lookingFor: "Male Flatmate",
+        moveIn: "Immediate",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: true,
+        avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&auto=format&fit=crop&q=80",
+        desc: "Working hybrid at Sector V. Looking for a neat flatmate to share a 2BHK near New Town Action Area 1. Love weekend football & acoustic jams.",
+        bookmarked: false
+      },
+      {
+        id: 2,
+        name: "Sneha Mukherjee",
+        age: 23,
+        gender: "Female",
+        type: "Student",
+        profession: "Postgrad Student @ Presidency",
+        location: "Park Street",
+        budget: 9000,
+        lookingFor: "Female Flatmate",
+        moveIn: "Within 15 Days",
+        veg: true,
+        nonSmoker: true,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
+        desc: "Studying literature. Peaceful, hygienic, and non-smoker. Seeking a female room partner near Park Street or Rabindra Sadan.",
+        bookmarked: false
+      },
+      {
+        id: 3,
+        name: "Anirban Das",
+        age: 28,
+        gender: "Male",
+        type: "Professional",
+        profession: "Financial Analyst @ PwC",
+        location: "Sector V",
+        budget: 14000,
+        lookingFor: "Male Flatmate",
+        moveIn: "Immediate",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: true,
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+        desc: "Looking for a roommate for a furnished high-rise flat in Sector V / Salt Lake. Open to chilled movie nights and cooking together.",
+        bookmarked: false
+      },
+      {
+        id: 4,
+        name: "Priyanka Roy",
+        age: 26,
+        gender: "Female",
+        type: "Professional",
+        profession: "UI/UX Designer @ Tech Startup",
+        location: "Salt Lake",
+        budget: 12500,
+        lookingFor: "Female Flatmate",
+        moveIn: "Next Month",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: true,
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+        desc: "Have a very friendly cat! Looking for a pet lover to split a spacious 3BHK flat in Salt Lake Block BD. High-speed fiber Wi-Fi already set up.",
+        bookmarked: false
+      },
+      {
+        id: 5,
+        name: "Aakash Dutta",
+        age: 22,
+        gender: "Male",
+        type: "Student",
+        profession: "Engineering Student @ JU",
+        location: "Tollygunge",
+        budget: 6500,
+        lookingFor: "Male Flatmate",
+        moveIn: "Immediate",
+        veg: false,
+        nonSmoker: false,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+        desc: "Seeking someone to share rent in an independent floor near Mahanayak Uttam Kumar metro. Budget-friendly and chill vibes.",
+        bookmarked: false
+      },
+      {
+        id: 6,
+        name: "Rimi Sengupta",
+        age: 27,
+        gender: "Female",
+        type: "Professional",
+        profession: "Senior Associate @ Deloitte",
+        location: "New Town",
+        budget: 16000,
+        lookingFor: "Female Flatmate",
+        moveIn: "Within 10 Days",
+        veg: true,
+        nonSmoker: true,
+        petFriendly: true,
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+        desc: "Looking for a working professional female flatmate in a gated society with swimming pool & gym near Unitech Infospace.",
+        bookmarked: false
+      },
+      {
+        id: 7,
+        name: "Subhashis Roy",
+        age: 29,
+        gender: "Male",
+        type: "Professional",
+        profession: "Data Engineer @ Wipro",
+        location: "Rajarhat",
+        budget: 8500,
+        lookingFor: "Male Flatmate",
+        moveIn: "Next Month",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+        desc: "Calm and organized guy. Need a roommate for a semi-furnished 2BHK flat near Chinar Park. Direct bus & auto connectivity to Sector V.",
+        bookmarked: false
+      },
+      {
+        id: 8,
+        name: "Tanvi Ghosh",
+        age: 25,
+        gender: "Female",
+        type: "Professional",
+        profession: "Marketing Lead @ D2C Brand",
+        location: "Gariahat",
+        budget: 13000,
+        lookingFor: "Female Flatmate",
+        moveIn: "Immediate",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+        desc: "Love South Kolkata's cafes and calm vibe. Looking for a friendly flatmate for a cozy flat near Ekdalia / Gariahat Pantaloons.",
+        bookmarked: false
+      },
+      {
+        id: 9,
+        name: "Vikramjit Bose",
+        age: 26,
+        gender: "Male",
+        type: "Professional",
+        profession: "Civil Engineer @ L&T",
+        location: "Howrah",
+        budget: 7500,
+        lookingFor: "Male Flatmate",
+        moveIn: "Immediate",
+        veg: false,
+        nonSmoker: false,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+        desc: "Looking for a roommate near Nabanna / Mandirtala with easy access to Kona Expressway and Vidyasagar Setu.",
+        bookmarked: false
+      },
+      {
+        id: 10,
+        name: "Ananya Bhattacharya",
+        age: 24,
+        gender: "Female",
+        type: "Student",
+        profession: "Medical Intern @ Medical College",
+        location: "Ballygunge",
+        budget: 10500,
+        lookingFor: "Female Flatmate",
+        moveIn: "Within 20 Days",
+        veg: true,
+        nonSmoker: true,
+        petFriendly: false,
+        avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&auto=format&fit=crop&q=80",
+        desc: "Medical intern with rotational shifts. Looking for a quiet, respectful flatmate in a secured building in Ballygunge Circular Road.",
+        bookmarked: false
+      }
+    ];
+
+    let currentProfiles = [...flatmateData];
+    let displayedCount = 6;
+
+    /* --------------------------------------------------------------------------
+       2. DOM ELEMENTS
+       -------------------------------------------------------------------------- */
+    const flatmatesGrid = document.getElementById('flatmatesGrid');
+    const matchCountEl = document.getElementById('matchCount');
+    const loadMoreWrap = document.getElementById('loadMoreWrap');
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const navToggleBtn = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    // Filters
+    const filterLocation = document.getElementById('filterLocation');
+    const filterBudget = document.getElementById('filterBudget');
+    const budgetValueEl = document.getElementById('budgetValue');
+    const filterGender = document.getElementById('filterGender');
+    const filterProfession = document.getElementById('filterProfession');
+    const filterNonSmoker = document.getElementById('filterNonSmoker');
+    const filterVeg = document.getElementById('filterVeg');
+    const filterPetFriendly = document.getElementById('filterPetFriendly');
+    const sortSelect = document.getElementById('sortSelect');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+
+    // Hero Search
+    const heroLocationSelect = document.getElementById('heroLocationSelect');
+    const heroBudgetSelect = document.getElementById('heroBudgetSelect');
+    const heroGenderSelect = document.getElementById('heroGenderSelect');
+    const heroSearchBtn = document.getElementById('heroSearchBtn');
+
+    // Modal
+    const profileModal = document.getElementById('profileModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalAvatar = document.getElementById('modalAvatar');
+    const modalName = document.getElementById('modalName');
+    const modalSub = document.getElementById('modalSub');
+    const modalLoc = document.getElementById('modalLoc');
+    const modalBudget = document.getElementById('modalBudget');
+    const modalPref = document.getElementById('modalPref');
+    const modalMoveIn = document.getElementById('modalMoveIn');
+    const modalDesc = document.getElementById('modalDesc');
+
+    // Form
+    const postForm = document.getElementById('postRequirementForm');
+    const toastBox = document.getElementById('toastBox');
+    const toastText = document.getElementById('toastText');
+
+    /* --------------------------------------------------------------------------
+       3. RENDER PROFILES TO GRID
+       -------------------------------------------------------------------------- */
+    function renderProfiles() {
+      flatmatesGrid.innerHTML = '';
+      const visibleList = currentProfiles.slice(0, displayedCount);
+
+      if (visibleList.length === 0) {
+        flatmatesGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-user-slash"></i>
+            <h4>No Flatmates Found</h4>
+            <p>Try widening your budget slider or choosing another Kolkata locality.</p>
+            <button class="btn btn-outline" onclick="resetFilters()">Reset All Filters</button>
+          </div>
+        `;
+        loadMoreWrap.style.display = 'none';
+        matchCountEl.textContent = '0';
+        return;
+      }
+
+      visibleList.forEach(profile => {
+        const card = document.createElement('div');
+        card.className = 'flatmate-card';
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="verified-tag"><i class="fa-solid fa-circle-check"></i> Verified</div>
+            <button class="bookmark-btn ${profile.bookmarked ? 'active' : ''}" onclick="toggleBookmark(${profile.id}, this)" title="Save Profile">
+              <i class="fa-${profile.bookmarked ? 'solid' : 'regular'} fa-bookmark"></i>
+            </button>
+            <img src="${profile.avatar}" alt="${profile.name}" class="card-avatar">
+          </div>
+          <div class="card-body">
+            <div class="card-name-row">
+              <h3 class="card-name">${profile.name}</h3>
+              <span class="card-age-gender">${profile.age} yrs • ${profile.gender}</span>
+            </div>
+            <div class="card-profession">
+              <i class="fa-solid fa-briefcase"></i> ${profile.profession}
+            </div>
+            <div class="card-location">
+              <i class="fa-solid fa-location-dot"></i> ${profile.location}, Kolkata
+            </div>
+            <div class="card-budget">
+              <div class="budget-title">Monthly Budget</div>
+              <div class="budget-amount">₹${profile.budget.toLocaleString('en-IN')}<span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">/month</span></div>
+            </div>
+            <div class="card-tags">
+              <span class="mini-tag"><i class="fa-solid fa-user-group"></i> ${profile.lookingFor}</span>
+              ${profile.veg ? '<span class="mini-tag"><i class="fa-solid fa-leaf" style="color:#10B981;"></i> Veg</span>' : ''}
+              ${profile.nonSmoker ? '<span class="mini-tag"><i class="fa-solid fa-ban-smoking"></i> Non-Smoker</span>' : ''}
+              ${profile.petFriendly ? '<span class="mini-tag"><i class="fa-solid fa-paw" style="color:var(--primary-hover)"></i> Pet Friendly</span>' : ''}
+            </div>
+            <p class="card-desc">${profile.desc}</p>
+            <div class="card-actions">
+              <button class="btn btn-outline" onclick="openProfileModal(${profile.id})">View Profile</button>
+              <button class="btn btn-accent" onclick="contactProfile('${profile.name}')">Contact</button>
+            </div>
+          </div>
+        `;
+        flatmatesGrid.appendChild(card);
+      });
+
+      matchCountEl.textContent = currentProfiles.length;
+      loadMoreWrap.style.display = displayedCount >= currentProfiles.length ? 'none' : 'block';
+    }
+
+    /* --------------------------------------------------------------------------
+       4. FILTERING & SORTING LOGIC
+       -------------------------------------------------------------------------- */
+    function applyFilters() {
+      const loc = filterLocation.value;
+      const maxBudget = parseInt(filterBudget.value, 10);
+      const gender = filterGender.value;
+      const prof = filterProfession.value;
+      const nonSmokerOnly = filterNonSmoker.checked;
+      const vegOnly = filterVeg.checked;
+      const petFriendlyOnly = filterPetFriendly.checked;
+      const sortVal = sortSelect.value;
+
+      currentProfiles = flatmateData.filter(item => {
+        if (loc && item.location !== loc) return false;
+        if (item.budget > maxBudget) return false;
+        if (gender !== 'all' && item.gender !== gender) return false;
+        if (prof !== 'all' && item.type !== prof) return false;
+        if (nonSmokerOnly && !item.nonSmoker) return false;
+        if (vegOnly && !item.veg) return false;
+        if (petFriendlyOnly && !item.petFriendly) return false;
+        return true;
+      });
+
+      // Sort
+      if (sortVal === 'budget-low') {
+        currentProfiles.sort((a, b) => a.budget - b.budget);
+      } else if (sortVal === 'budget-high') {
+        currentProfiles.sort((a, b) => b.budget - a.budget);
+      } else {
+        // Default recommended
+        currentProfiles.sort((a, b) => a.id - b.id);
+      }
+
+      displayedCount = 6;
+      renderProfiles();
+    }
+
+    function resetFilters() {
+      filterLocation.value = "";
+      filterBudget.value = "25000";
+      budgetValueEl.textContent = "₹25,000/mo";
+      filterGender.value = "all";
+      filterProfession.value = "all";
+      filterNonSmoker.checked = false;
+      filterVeg.checked = false;
+      filterPetFriendly.checked = false;
+      sortSelect.value = "recommended";
+      applyFilters();
+      showToast("Filters have been reset");
+    }
+
+    function quickFilterLocation(locName) {
+      filterLocation.value = locName;
+      document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+      applyFilters();
+    }
+
+    function handleLoadMore() {
+      displayedCount += 4;
+      renderProfiles();
+    }
+
+    /* --------------------------------------------------------------------------
+       5. MODAL LOGIC
+       -------------------------------------------------------------------------- */
+    function openProfileModal(id) {
+      const profile = flatmateData.find(p => p.id === id);
+      if (!profile) return;
+
+      modalAvatar.src = profile.avatar;
+      modalName.textContent = `${profile.name}, ${profile.age}`;
+      modalSub.textContent = `${profile.profession} • ${profile.gender}`;
+      modalLoc.textContent = `${profile.location}, Kolkata`;
+      modalBudget.textContent = `₹${profile.budget.toLocaleString('en-IN')}/month`;
+      modalPref.textContent = profile.lookingFor;
+      modalMoveIn.textContent = profile.moveIn || "Flexible";
+      modalDesc.textContent = profile.desc;
+
+      profileModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      profileModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    profileModal.addEventListener('click', (e) => {
+      if (e.target === profileModal) closeModal();
+    });
+
+    /* --------------------------------------------------------------------------
+       6. BOOKMARKS, CONTACT & TOAST
+       -------------------------------------------------------------------------- */
+    function toggleBookmark(id, btnElement) {
+      const target = flatmateData.find(p => p.id === id);
+      if (target) {
+        target.bookmarked = !target.bookmarked;
+        btnElement.classList.toggle('active', target.bookmarked);
+        const icon = btnElement.querySelector('i');
+        icon.className = target.bookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
+        showToast(target.bookmarked ? `Saved ${target.name}'s profile!` : `Removed from saved bookmarks`);
+      }
+    }
+
+    function contactProfile(name) {
+      showToast(`Contact request sent to ${name}!`);
+    }
+
+    function handleDirectContact() {
+      closeModal();
+      showToast("Message request sent via Kolkata network.");
+    }
+
+    function handleDirectCall() {
+      closeModal();
+      showToast("Phone number requested. You will receive an SMS prompt.");
+    }
+
+    function showToast(msg) {
+      toastText.textContent = msg;
+      toastBox.classList.add('show');
+      setTimeout(() => {
+        toastBox.classList.remove('show');
+      }, 3000);
+    }
+
+    /* --------------------------------------------------------------------------
+       7. POST REQUIREMENT FORM VALIDATION & SUBMISSION
+       -------------------------------------------------------------------------- */
+    postForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let isValid = true;
+
+      const requiredInputs = postForm.querySelectorAll('[required]');
+      requiredInputs.forEach(input => {
+        const group = input.closest('.form-group');
+        if (!input.value.trim()) {
+          group.classList.add('has-error');
+          isValid = false;
+        } else {
+          group.classList.remove('has-error');
+        }
+      });
+
+      if (!isValid) {
+        showToast("Please fill all required fields properly.");
+        return;
+      }
+
+      // Add dummy profile to state
+      const newPost = {
+        id: flatmateData.length + 1,
+        name: document.getElementById('postName').value.trim(),
+        age: parseInt(document.getElementById('postAge').value, 10),
+        gender: document.getElementById('postGender').value,
+        type: "Professional",
+        profession: document.getElementById('postProfession').value.trim(),
+        location: document.getElementById('postLocation').value,
+        budget: parseInt(document.getElementById('postBudget').value, 10),
+        lookingFor: `${document.getElementById('postFlatmatePref').value} Flatmate`,
+        moveIn: document.getElementById('postMoveDate').value || "Immediate",
+        veg: false,
+        nonSmoker: true,
+        petFriendly: true,
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&auto=format&fit=crop&q=80",
+        desc: document.getElementById('postAbout').value.trim() || "Excited to meet like-minded roommates in Kolkata.",
+        bookmarked: false
+      };
+
+      flatmateData.unshift(newPost);
+      currentProfiles.unshift(newPost);
+      renderProfiles();
+
+      postForm.reset();
+      showToast("🎉 Your flatmate requirement is live on the listings!");
+      document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* --------------------------------------------------------------------------
+       8. HERO SEARCH SYNC WITH SIDEBAR FILTERS
+       -------------------------------------------------------------------------- */
+    heroSearchBtn.addEventListener('click', () => {
+      filterLocation.value = heroLocationSelect.value;
+      filterBudget.value = heroBudgetSelect.value;
+      budgetValueEl.textContent = `₹${parseInt(heroBudgetSelect.value).toLocaleString('en-IN')}/mo`;
+      filterGender.value = heroGenderSelect.value;
+      
+      applyFilters();
+      document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* --------------------------------------------------------------------------
+       9. THEME TOGGLE (DARK / LIGHT)
+       -------------------------------------------------------------------------- */
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      }
+    });
+
+    /* --------------------------------------------------------------------------
+       10. ACCORDION & MOBILE NAVIGATION
+       -------------------------------------------------------------------------- */
+    // FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // Mobile Nav
+    navToggleBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Dynamic Filter Event Listeners
+    filterLocation.addEventListener('change', applyFilters);
+    filterBudget.addEventListener('input', (e) => {
+      budgetValueEl.textContent = `₹${parseInt(e.target.value).toLocaleString('en-IN')}/mo`;
+      applyFilters();
+    });
+    filterGender.addEventListener('change', applyFilters);
+    filterProfession.addEventListener('change', applyFilters);
+    filterNonSmoker.addEventListener('change', applyFilters);
+    filterVeg.addEventListener('change', applyFilters);
+    filterPetFriendly.addEventListener('change', applyFilters);
+    sortSelect.addEventListener('change', applyFilters);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+
+    // Initial render
+    renderProfiles();
+  </script>
+</body>
+</html>
