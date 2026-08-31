@@ -79,7 +79,6 @@
       font-family: inherit;
     }
 
-    /* Fix dropdown options readability in dark mode */
     select option {
       background-color: var(--bg-surface);
       color: var(--text-main);
@@ -430,7 +429,6 @@
       overflow-y: auto;
     }
 
-    /* Custom Scrollbar for Filters Sidebar */
     .filters-sidebar::-webkit-scrollbar {
       width: 6px;
     }
@@ -1118,7 +1116,7 @@
     }
 
     /* ==========================================================================
-       MODAL & FLOATING WIDGETS
+       MODALS & FLOATING WIDGETS
        ========================================================================== */
     .modal-overlay {
       position: fixed;
@@ -1214,6 +1212,93 @@
       font-weight: 700;
       font-size: 0.95rem;
       color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       LOGIN & SIGNUP MODAL SPECIFIC STYLES
+       ========================================================================== */
+    .auth-modal-card {
+      max-width: 440px;
+      padding: 32px;
+    }
+    .auth-tabs {
+      display: flex;
+      background: var(--bg-input);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .auth-tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .auth-tab-btn.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+    .social-auth-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .btn-social {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-main);
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-social:hover {
+      background: var(--bg-input);
+      border-color: var(--text-muted);
+    }
+    .btn-google i {
+      color: #EA4335;
+    }
+    .btn-facebook i {
+      color: #1877F2;
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 18px 0;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .auth-divider span {
+      padding: 0 12px;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     /* Floating WhatsApp Button */
@@ -1367,8 +1452,8 @@
         <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark/Light Mode">
           <i class="fa-solid fa-moon"></i>
         </button>
-        <button class="btn btn-primary" onclick="showToast('Login & Registration demo modal is ready!')">
-          <i class="fa-regular fa-user"></i> Login
+        <button class="btn btn-primary" id="navAuthBtn" onclick="openAuthModal()">
+          <i class="fa-regular fa-user"></i> <span id="navAuthLabel">Login</span>
         </button>
         <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
           <i class="fa-solid fa-bars"></i>
@@ -1554,9 +1639,7 @@
           </div>
 
           <!-- Cards Grid -->
-          <div class="flatmates-grid" id="flatmatesGrid">
-            <!-- Dynamic Profiles will be injected here via JS -->
-          </div>
+          <div class="flatmates-grid" id="flatmatesGrid"></div>
 
           <!-- Load More Button -->
           <div class="load-more-wrap" id="loadMoreWrap">
@@ -1719,12 +1802,12 @@
           <div class="safety-box">
             <i class="fa-solid fa-shield-halved"></i>
             <h4>Government ID Check</h4>
-            <p>Users can verify their profile via Aadhaar or Corporate Work Email authentication.</p>
+            <p>Users can verify their profile via corporate credentials or official identification.</p>
           </div>
           <div class="safety-box">
             <i class="fa-solid fa-lock"></i>
             <h4>Privacy Protection</h4>
-            <p>Your phone number and precise address remain confidential until you choose to connect.</p>
+            <p>Your contact data is securely shared through verified inquiries only.</p>
           </div>
           <div class="safety-box">
             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -1826,7 +1909,7 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            We verify users through corporate email addresses, LinkedIn profiles, and optional Government ID verification (Aadhaar/Voter ID) to ensure a secure community.
+            We verify users through corporate email addresses, LinkedIn profiles, and identity authentication to ensure a secure community.
           </div>
         </div>
 
@@ -1842,11 +1925,11 @@
 
         <div class="faq-item">
           <div class="faq-question">
-            <span>How can I contact potential flatmates safely?</span>
+            <span>How do I contact potential flatmates?</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            You can click on the "Contact" button on any verified card to initiate an in-platform chat or request their verified WhatsApp/phone contact.
+            Clicking "Contact" immediately routes you to direct WhatsApp communication with complete flatmate preferences attached for quick coordination.
           </div>
         </div>
       </div>
@@ -1919,6 +2002,54 @@
   </footer>
 
   <!-- ==========================================================================
+       MODAL: AUTHENTICATION (GOOGLE, FACEBOOK, EMAIL)
+       ========================================================================== -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card auth-modal-card">
+      <button class="modal-close" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">Log In</button>
+        <button class="auth-tab-btn" id="tabSignupBtn" onclick="switchAuthTab('signup')">Sign Up</button>
+      </div>
+
+      <div class="social-auth-group">
+        <button class="btn-social btn-google" onclick="handleSocialAuth('Google')">
+          <i class="fa-brands fa-google"></i> Continue with Google
+        </button>
+        <button class="btn-social btn-facebook" onclick="handleSocialAuth('Facebook')">
+          <i class="fa-brands fa-facebook-f"></i> Continue with Facebook
+        </button>
+      </div>
+
+      <div class="auth-divider">
+        <span>or with email</span>
+      </div>
+
+      <form id="emailAuthForm" class="auth-form" onsubmit="handleEmailAuth(event)">
+        <div class="form-group" id="authNameGroup" style="display: none;">
+          <label for="authName">Full Name</label>
+          <input type="text" id="authName" class="form-control" placeholder="e.g. Souvik Roy">
+        </div>
+
+        <div class="form-group">
+          <label for="authEmail">Email Address</label>
+          <input type="email" id="authEmail" class="form-control" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="authPassword">Password</label>
+          <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-accent" id="authSubmitBtn" style="width: 100%; padding: 12px; margin-top: 6px;">
+          Log In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        MODAL: DETAILED PROFILE VIEW
        ========================================================================== -->
   <div class="modal-overlay" id="profileModal">
@@ -1961,7 +2092,7 @@
             <i class="fa-solid fa-message"></i> Send Message
           </button>
           <button class="btn btn-accent" style="flex: 1;" onclick="handleDirectCall()">
-            <i class="fa-solid fa-phone"></i> Request Contact
+            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
           </button>
         </div>
       </div>
@@ -1969,7 +2100,7 @@
   </div>
 
   <!-- Floating WhatsApp Action -->
-  <div class="floating-wa" onclick="showToast('Connecting you with FlatMate Kolkata Support on WhatsApp...')">
+  <div class="floating-wa" onclick="contactWhatsAppSupport()">
     <span class="wa-tooltip">Chat with Support</span>
     <i class="fa-brands fa-whatsapp"></i>
   </div>
@@ -1981,9 +2112,14 @@
   </div>
 
   <!-- ==========================================================================
-       JAVASCRIPT: LOCAL DATA, FILTERING, MODALS & INTERACTIONS
+       JAVASCRIPT: LOCAL DATA, AUTH, WHATSAPP REDIRECTION & FILTERS
        ========================================================================== -->
   <script>
+    /* --------------------------------------------------------------------------
+       WHATSAPP DISPATCH DESTINATION (KOLKATA MATCHING LINE)
+       -------------------------------------------------------------------------- */
+    const WHATSAPP_CONTACT_NUMBER = "919907464271";
+
     /* --------------------------------------------------------------------------
        1. SAMPLE DATA: 10 Realistic Kolkata Flatmate Profiles
        -------------------------------------------------------------------------- */
@@ -2172,6 +2308,9 @@
 
     let currentProfiles = [...flatmateData];
     let displayedCount = 6;
+    let activeProfileForModal = null;
+    let loggedInUser = null;
+    let currentAuthMode = 'login';
 
     /* --------------------------------------------------------------------------
        2. DOM ELEMENTS
@@ -2201,7 +2340,14 @@
     const heroGenderSelect = document.getElementById('heroGenderSelect');
     const heroSearchBtn = document.getElementById('heroSearchBtn');
 
-    // Modal
+    // Modals
+    const authModal = document.getElementById('authModal');
+    const tabLoginBtn = document.getElementById('tabLoginBtn');
+    const tabSignupBtn = document.getElementById('tabSignupBtn');
+    const authNameGroup = document.getElementById('authNameGroup');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const navAuthLabel = document.getElementById('navAuthLabel');
+
     const profileModal = document.getElementById('profileModal');
     const modalCloseBtn = document.getElementById('modalCloseBtn');
     const modalAvatar = document.getElementById('modalAvatar');
@@ -2274,7 +2420,7 @@
             <p class="card-desc">${profile.desc}</p>
             <div class="card-actions">
               <button class="btn btn-outline" onclick="openProfileModal(${profile.id})">View Profile</button>
-              <button class="btn btn-accent" onclick="contactProfile('${profile.name}')">Contact</button>
+              <button class="btn btn-accent" onclick="contactProfileById(${profile.id})"><i class="fa-brands fa-whatsapp"></i> Contact</button>
             </div>
           </div>
         `;
@@ -2309,13 +2455,11 @@
         return true;
       });
 
-      // Sort
       if (sortVal === 'budget-low') {
         currentProfiles.sort((a, b) => a.budget - b.budget);
       } else if (sortVal === 'budget-high') {
         currentProfiles.sort((a, b) => b.budget - a.budget);
       } else {
-        // Default recommended
         currentProfiles.sort((a, b) => a.id - b.id);
       }
 
@@ -2349,11 +2493,71 @@
     }
 
     /* --------------------------------------------------------------------------
-       5. MODAL LOGIC
+       5. AUTHENTICATION (GOOGLE, FACEBOOK, EMAIL)
+       -------------------------------------------------------------------------- */
+    function openAuthModal() {
+      if (loggedInUser) {
+        loggedInUser = null;
+        navAuthLabel.textContent = "Login";
+        showToast("You have been logged out.");
+        return;
+      }
+      authModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAuthModal() {
+      authModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    function switchAuthTab(mode) {
+      currentAuthMode = mode;
+      if (mode === 'login') {
+        tabLoginBtn.classList.add('active');
+        tabSignupBtn.classList.remove('active');
+        authNameGroup.style.display = 'none';
+        authSubmitBtn.textContent = 'Log In';
+      } else {
+        tabSignupBtn.classList.add('active');
+        tabLoginBtn.classList.remove('active');
+        authNameGroup.style.display = 'flex';
+        authSubmitBtn.textContent = 'Create Account';
+      }
+    }
+
+    function handleSocialAuth(provider) {
+      loggedInUser = {
+        name: provider === 'Google' ? "Google User" : "Facebook User",
+        email: `user@${provider.toLowerCase()}.com`
+      };
+      navAuthLabel.textContent = "Hi, User";
+      closeAuthModal();
+      showToast(`Logged in successfully via ${provider}!`);
+    }
+
+    function handleEmailAuth(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const name = document.getElementById('authName').value.trim() || email.split('@')[0];
+      
+      loggedInUser = { name, email };
+      navAuthLabel.textContent = `Hi, ${name.split(' ')[0]}`;
+      closeAuthModal();
+      showToast(currentAuthMode === 'login' ? "Welcome back to FlatMate Kolkata!" : "Account created successfully!");
+    }
+
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) closeAuthModal();
+    });
+
+    /* --------------------------------------------------------------------------
+       6. PROFILE MODAL & WHATSAPP REDIRECTION (9907464271)
        -------------------------------------------------------------------------- */
     function openProfileModal(id) {
       const profile = flatmateData.find(p => p.id === id);
       if (!profile) return;
+      activeProfileForModal = profile;
 
       modalAvatar.src = profile.avatar;
       modalName.textContent = `${profile.name}, ${profile.age}`;
@@ -2378,8 +2582,39 @@
       if (e.target === profileModal) closeModal();
     });
 
+    function dispatchWhatsAppContact(profile, customNote = "") {
+      const senderInfo = loggedInUser ? `Sender: ${loggedInUser.name} (${loggedInUser.email})` : "Sender: Website Visitor";
+      const message = `Hello FlatMate Kolkata! 🏡\n\nI want to connect with the following flatmate profile:\n• Name: ${profile.name} (${profile.age} yrs, ${profile.gender})\n• Location: ${profile.location}, Kolkata\n• Budget: ₹${profile.budget.toLocaleString('en-IN')}/mo\n• Profession: ${profile.profession}\n• Preference: ${profile.lookingFor}\n${customNote ? `• Message: ${customNote}\n` : ''}\n${senderInfo}\n\nPlease help connect us!`;
+      
+      const whatsappUrl = `https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      showToast(`Redirecting to WhatsApp (${WHATSAPP_CONTACT_NUMBER})...`);
+    }
+
+    function contactProfileById(id) {
+      const profile = flatmateData.find(p => p.id === id);
+      if (profile) dispatchWhatsAppContact(profile);
+    }
+
+    function handleDirectContact() {
+      if (!activeProfileForModal) return;
+      closeModal();
+      dispatchWhatsAppContact(activeProfileForModal, "Interested in discussing room availability.");
+    }
+
+    function handleDirectCall() {
+      if (!activeProfileForModal) return;
+      closeModal();
+      dispatchWhatsAppContact(activeProfileForModal, "Requesting direct contact and visit scheduling.");
+    }
+
+    function contactWhatsAppSupport() {
+      const message = `Hello FlatMate Kolkata Support Team,\n\nI am browsing flatmates in Kolkata and would like assistance finding shared accommodation.`;
+      window.open(`https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
     /* --------------------------------------------------------------------------
-       6. BOOKMARKS, CONTACT & TOAST
+       7. BOOKMARKS & TOAST
        -------------------------------------------------------------------------- */
     function toggleBookmark(id, btnElement) {
       const target = flatmateData.find(p => p.id === id);
@@ -2392,30 +2627,16 @@
       }
     }
 
-    function contactProfile(name) {
-      showToast(`Contact request sent to ${name}!`);
-    }
-
-    function handleDirectContact() {
-      closeModal();
-      showToast("Message request sent via Kolkata network.");
-    }
-
-    function handleDirectCall() {
-      closeModal();
-      showToast("Phone number requested. You will receive an SMS prompt.");
-    }
-
     function showToast(msg) {
       toastText.textContent = msg;
       toastBox.classList.add('show');
       setTimeout(() => {
         toastBox.classList.remove('show');
-      }, 3000);
+      }, 3200);
     }
 
     /* --------------------------------------------------------------------------
-       7. POST REQUIREMENT FORM VALIDATION & SUBMISSION
+       8. POST REQUIREMENT FORM VALIDATION & SUBMISSION
        -------------------------------------------------------------------------- */
     postForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -2460,13 +2681,17 @@
       currentProfiles.unshift(newPost);
       renderProfiles();
 
+      // Dispatch to WhatsApp
+      const postMsg = `*New Flatmate Requirement Posted!*\n\n• Name: ${newPost.name} (${newPost.age}, ${newPost.gender})\n• Location: ${newPost.location}, Kolkata\n• Budget: ₹${newPost.budget.toLocaleString('en-IN')}/mo\n• Profession: ${newPost.profession}\n• Looking for: ${newPost.lookingFor}\n• About: ${newPost.desc}`;
+      window.open(`https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(postMsg)}`, '_blank');
+
       postForm.reset();
-      showToast("🎉 Your flatmate requirement is live on the listings!");
+      showToast("🎉 Your flatmate requirement is live & forwarded to WhatsApp!");
       document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
     });
 
     /* --------------------------------------------------------------------------
-       8. HERO SEARCH SYNC WITH SIDEBAR FILTERS
+       9. HERO SEARCH SYNC WITH SIDEBAR FILTERS
        -------------------------------------------------------------------------- */
     heroSearchBtn.addEventListener('click', () => {
       filterLocation.value = heroLocationSelect.value;
@@ -2479,7 +2704,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       9. THEME TOGGLE (DARK / LIGHT)
+       10. THEME TOGGLE (DARK / LIGHT)
        -------------------------------------------------------------------------- */
     themeToggleBtn.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -2493,9 +2718,8 @@
     });
 
     /* --------------------------------------------------------------------------
-       10. ACCORDION & MOBILE NAVIGATION
+       11. ACCORDION & MOBILE NAVIGATION
        -------------------------------------------------------------------------- */
-    // FAQs
     document.querySelectorAll('.faq-item').forEach(item => {
       item.querySelector('.faq-question').addEventListener('click', () => {
         const isActive = item.classList.contains('active');
@@ -2504,7 +2728,6 @@
       });
     });
 
-    // Mobile Nav
     navToggleBtn.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
@@ -2517,7 +2740,7 @@
       });
     });
 
-    // Dynamic Filter Event Listeners
+    // Dynamic Filter Listeners
     filterLocation.addEventListener('change', applyFilters);
     filterBudget.addEventListener('input', (e) => {
       budgetValueEl.textContent = `₹${parseInt(e.target.value).toLocaleString('en-IN')}/mo`;
