@@ -78,6 +78,13 @@
     button, input, select, textarea {
       font-family: inherit;
     }
+
+    /* Fix dropdown options readability in dark mode */
+    select option {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+    }
+
     .container {
       max-width: 1240px;
       margin: 0 auto;
@@ -410,7 +417,7 @@
       align-items: start;
     }
 
-    /* Filter Sidebar */
+    /* Filter Sidebar (Scrollable & Sticky) */
     .filters-sidebar {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -419,7 +426,26 @@
       box-shadow: var(--shadow-sm);
       position: sticky;
       top: 94px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
     }
+
+    /* Custom Scrollbar for Filters Sidebar */
+    .filters-sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .filters-sidebar::-webkit-scrollbar-track {
+      background: var(--bg-input);
+      border-radius: 10px;
+    }
+    .filters-sidebar::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 10px;
+    }
+    .filters-sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
     .filter-header {
       display: flex;
       justify-content: space-between;
@@ -1094,7 +1120,6 @@
     /* ==========================================================================
        MODAL & FLOATING WIDGETS
        ========================================================================== */
-    /* Profile Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -1263,6 +1288,7 @@
       }
       .filters-sidebar {
         position: static;
+        max-height: none;
         margin-bottom: 24px;
       }
       .steps-grid, .testimonials-grid {
@@ -1353,7 +1379,7 @@
 
   <!-- ==========================================================================
        HERO SECTION
-       ========================================================================== */ -->
+       ========================================================================== -->
   <section class="hero" id="home">
     <div class="container hero-content">
       <div class="kolkata-badge">
@@ -1544,7 +1570,7 @@
   </section>
 
   <!-- ==========================================================================
-       POST A FLAT / REQUIREMENT SECTION
+       POST REQUIREMENT SECTION (FORM)
        ========================================================================== -->
   <section class="post-section" id="post">
     <div class="container">
@@ -2411,7 +2437,6 @@
         return;
       }
 
-      // Add dummy profile to state
       const newPost = {
         id: flatmateData.length + 1,
         name: document.getElementById('postName').value.trim(),
