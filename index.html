@@ -8,48 +8,66 @@
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* ==========================================================================
-       CSS VARIABLES & THEMES (Warm Yellow & Kolkata Crimson accents)
+       MODERNIZED DESIGN SYSTEM & CSS VARIABLES
        ========================================================================== */
     :root {
-      --primary: #FFB703;
-      --primary-hover: #FB8500;
-      --primary-rgb: 255, 183, 3;
-      --accent: #D90429;
-      --accent-hover: #EF233C;
-      --bg-body: #F8F9FC;
+      /* Brand Accents */
+      --primary: #6366F1;          /* Electric Indigo */
+      --primary-hover: #4F46E5;
+      --primary-rgb: 99, 102, 241;
+      --accent: #F43F5E;           /* Neon Rose / Crimson */
+      --accent-hover: #E11D48;
+      --accent-rgb: 244, 63, 94;
+      --emerald: #10B981;
+
+      /* Light Theme Surface Layers */
+      --bg-body: #F8FAFC;
       --bg-surface: #FFFFFF;
       --bg-card: #FFFFFF;
-      --bg-input: #F1F4F9;
-      --text-main: #1E293B;
+      --bg-input: #F1F5F9;
+      --text-main: #0F172A;
       --text-muted: #64748B;
       --border-color: #E2E8F0;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
-      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.12);
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 22px;
+      
+      /* Glassmorphism & Elevation */
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 24px 48px -12px rgba(15, 23, 42, 0.14);
+      --hero-glow-1: rgba(99, 102, 241, 0.12);
+      --hero-glow-2: rgba(244, 63, 94, 0.09);
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
       --radius-full: 9999px;
-      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      --header-h: 74px;
+      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      --header-h: 76px;
     }
 
     [data-theme="dark"] {
-      --bg-body: #0F172A;
-      --bg-surface: #1E293B;
-      --bg-card: #1E293B;
-      --bg-input: #334155;
+      /* Dark Theme Surfaces: Ultra-Modern Obsidian & Deep Slate */
+      --bg-body: #070B14;
+      --bg-surface: #0E1626;
+      --bg-card: #111C31;
+      --bg-input: #1A263D;
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
-      --border-color: #334155;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
-      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.6);
+      --border-color: #1E293B;
+
+      --glass-bg: rgba(14, 22, 38, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 16px 36px -8px rgba(0, 0, 0, 0.65);
+      --shadow-lg: 0 28px 56px -12px rgba(0, 0, 0, 0.8);
+      --hero-glow-1: rgba(99, 102, 241, 0.22);
+      --hero-glow-2: rgba(244, 63, 94, 0.18);
     }
 
     /* ==========================================================================
@@ -91,45 +109,50 @@
     }
     .section-title-wrap {
       text-align: center;
-      max-width: 640px;
-      margin: 0 auto 48px auto;
+      max-width: 680px;
+      margin: 0 auto 52px auto;
     }
     .section-tag {
-      display: inline-block;
-      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent);
-      background: rgba(217, 4, 41, 0.1);
+      letter-spacing: 1.2px;
+      color: var(--primary);
+      background: rgba(var(--primary-rgb), 0.12);
+      border: 1px solid rgba(var(--primary-rgb), 0.2);
       padding: 6px 14px;
       border-radius: var(--radius-full);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .section-title {
-      font-size: 2.2rem;
-      font-weight: 800;
+      font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.35rem;
+      font-weight: 700;
       margin-bottom: 12px;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.8px;
     }
     .section-subtitle {
       color: var(--text-muted);
-      font-size: 1rem;
+      font-size: 1.02rem;
     }
 
     /* ==========================================================================
-       NAVBAR
+       NAVBAR (Glassmorphic)
        ========================================================================== */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: var(--bg-surface);
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-color);
       height: var(--header-h);
       display: flex;
       align-items: center;
-      box-shadow: var(--shadow-sm);
       transition: var(--transition);
     }
     .nav-container {
@@ -141,25 +164,29 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.35rem;
-      font-weight: 800;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
       color: var(--text-main);
     }
     .brand-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      color: #0F172A;
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), #8B5CF6);
+      color: #FFF;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 12px;
       font-size: 1.15rem;
-      box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.4);
+      box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.4);
     }
     .brand span {
-      color: var(--accent);
+      background: linear-gradient(135deg, var(--accent) 0%, #FB7185 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .nav-menu {
       display: flex;
@@ -169,7 +196,7 @@
     }
     .nav-link {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       color: var(--text-muted);
       transition: var(--transition);
       position: relative;
@@ -184,20 +211,20 @@
       left: 0;
       width: 100%;
       height: 2.5px;
-      background: var(--accent);
-      border-radius: 2px;
+      background: var(--primary);
+      border-radius: 4px;
     }
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
     .theme-toggle-btn {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: var(--radius-full);
       display: flex;
       align-items: center;
@@ -207,14 +234,15 @@
       transition: var(--transition);
     }
     .theme-toggle-btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.06);
+      border-color: var(--primary);
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 10px 20px;
+      padding: 10px 22px;
       font-size: 0.92rem;
       font-weight: 600;
       border-radius: var(--radius-md);
@@ -223,32 +251,31 @@
       transition: var(--transition);
     }
     .btn-primary {
-      background: var(--primary);
-      color: #0F172A;
-      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.35);
+      background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(var(--primary-rgb), 0.35);
     }
     .btn-primary:hover {
-      background: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.45);
+      box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.45);
     }
     .btn-accent {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent) 0%, #E11D48 100%);
       color: #FFF;
-      box-shadow: 0 4px 12px rgba(217, 4, 41, 0.3);
+      box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
     }
     .btn-accent:hover {
-      background: var(--accent-hover);
       transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.45);
     }
     .btn-outline {
-      background: transparent;
+      background: var(--bg-surface);
       border: 1.5px solid var(--border-color);
       color: var(--text-main);
     }
     .btn-outline:hover {
       background: var(--bg-input);
-      border-color: var(--text-muted);
+      border-color: var(--primary);
     }
     .hamburger {
       display: none;
@@ -260,18 +287,18 @@
     }
 
     /* ==========================================================================
-       HERO SECTION WITH KOLKATA GRADIENTS
+       HERO SECTION
        ========================================================================== */
     .hero {
       position: relative;
-      padding: 80px 0 100px;
-      background: radial-gradient(circle at 80% 20%, rgba(255, 183, 3, 0.12), transparent 40%),
-                  radial-gradient(circle at 10% 80%, rgba(217, 4, 41, 0.08), transparent 45%);
+      padding: 90px 0 110px;
+      background: radial-gradient(circle at 85% 15%, var(--hero-glow-1), transparent 45%),
+                  radial-gradient(circle at 15% 85%, var(--hero-glow-2), transparent 50%);
       overflow: hidden;
     }
     .hero-content {
       text-align: center;
-      max-width: 840px;
+      max-width: 880px;
       margin: 0 auto;
     }
     .kolkata-badge {
@@ -280,39 +307,40 @@
       gap: 8px;
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
-      padding: 6px 16px;
+      padding: 7px 18px;
       border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.84rem;
+      font-weight: 700;
       color: var(--text-main);
       margin-bottom: 24px;
       box-shadow: var(--shadow-sm);
     }
     .kolkata-badge i {
-      color: var(--primary);
+      color: var(--accent);
     }
     .hero h1 {
-      font-size: 3.4rem;
-      font-weight: 800;
+      font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
       line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 20px;
+      letter-spacing: -1.2px;
+      margin-bottom: 22px;
     }
     .hero h1 span {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--primary-hover) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .hero p {
       font-size: 1.15rem;
       color: var(--text-muted);
-      margin-bottom: 40px;
-      max-width: 620px;
+      margin-bottom: 42px;
+      max-width: 640px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    /* Quick Hero Search Box */
+    /* Modernized Hero Search Card */
     .hero-search-box {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -320,7 +348,7 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
       display: grid;
-      grid-template-columns: 1.4fr 1.1fr 1fr auto;
+      grid-template-columns: 1.4fr 1.1fr 1.1fr auto;
       gap: 12px;
       align-items: center;
     }
@@ -331,16 +359,16 @@
       background: var(--bg-input);
       padding: 12px 16px;
       border-radius: var(--radius-md);
-      border: 1px solid transparent;
+      border: 1.5px solid transparent;
       transition: var(--transition);
     }
     .search-group:focus-within {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+      box-shadow: 0 0 0 3.5px rgba(var(--primary-rgb), 0.2);
     }
     .search-group i {
-      color: var(--primary-hover);
-      font-size: 1.1rem;
+      color: var(--primary);
+      font-size: 1.15rem;
     }
     .search-input-wrap {
       display: flex;
@@ -349,11 +377,11 @@
       width: 100%;
     }
     .search-input-wrap label {
-      font-size: 0.72rem;
-      font-weight: 700;
+      font-size: 0.7rem;
+      font-weight: 800;
       text-transform: uppercase;
       color: var(--text-muted);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
     .search-input-wrap select, .search-input-wrap input {
       background: transparent;
@@ -373,7 +401,7 @@
 
     /* Popular Kolkata Location Chips */
     .hero-popular-chips {
-      margin-top: 24px;
+      margin-top: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -388,9 +416,9 @@
     .chip {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: var(--radius-full);
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: var(--text-main);
       cursor: pointer;
@@ -399,12 +427,13 @@
     .chip:hover {
       background: var(--primary);
       border-color: var(--primary);
-      color: #0F172A;
+      color: #FFF;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
     }
 
     /* ==========================================================================
-       FIND FLATMATES SECTION WITH FILTERS & GRID
+       FLATMATE LISTINGS & FILTERS SECTION
        ========================================================================== */
     .listings-section {
       padding: 60px 0 90px;
@@ -430,11 +459,10 @@
     }
 
     .filters-sidebar::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     .filters-sidebar::-webkit-scrollbar-track {
-      background: var(--bg-input);
-      border-radius: 10px;
+      background: transparent;
     }
     .filters-sidebar::-webkit-scrollbar-thumb {
       background: var(--border-color);
@@ -461,11 +489,11 @@
     }
     .filter-reset {
       font-size: 0.82rem;
-      color: var(--accent);
+      color: var(--primary);
       background: none;
       border: none;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
     }
     .filter-reset:hover {
       text-decoration: underline;
@@ -493,6 +521,7 @@
     }
     .filter-select:focus, .filter-input:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
     }
     .budget-slider-wrap {
       display: flex;
@@ -501,33 +530,34 @@
     }
     .budget-slider {
       width: 100%;
-      accent-color: var(--accent);
+      accent-color: var(--primary);
       cursor: pointer;
     }
     .budget-val {
       font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--accent);
+      font-weight: 800;
+      color: var(--primary);
     }
     .checkbox-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 9px;
     }
     .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 0.88rem;
       color: var(--text-muted);
       cursor: pointer;
       user-select: none;
     }
     .checkbox-label input[type="checkbox"] {
-      accent-color: var(--accent);
-      width: 16px;
-      height: 16px;
+      accent-color: var(--primary);
+      width: 17px;
+      height: 17px;
       cursor: pointer;
+      border-radius: 4px;
     }
 
     /* Main Listings Grid Area */
@@ -544,7 +574,7 @@
       font-weight: 700;
     }
     .results-count span {
-      color: var(--accent);
+      color: var(--primary);
     }
     .sort-wrap {
       display: flex;
@@ -559,11 +589,11 @@
 
     .flatmates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
       gap: 24px;
     }
 
-    /* Flatmate Profile Card */
+    /* Modern Flatmate Profile Card */
     .flatmate-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -582,8 +612,8 @@
     }
     .card-top {
       position: relative;
-      height: 140px;
-      background: linear-gradient(135deg, rgba(255, 183, 3, 0.25), rgba(217, 4, 41, 0.2));
+      height: 120px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(244, 63, 94, 0.2));
       display: flex;
       align-items: flex-end;
       padding: 16px 20px;
@@ -592,7 +622,7 @@
       position: absolute;
       top: 14px;
       left: 14px;
-      background: rgba(16, 185, 129, 0.9);
+      background: rgba(16, 185, 129, 0.92);
       backdrop-filter: blur(4px);
       color: #FFF;
       font-size: 0.72rem;
@@ -601,7 +631,8 @@
       border-radius: var(--radius-full);
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
     }
     .bookmark-btn {
       position: absolute;
@@ -610,19 +641,20 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: var(--radius-full);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: var(--transition);
+      box-shadow: var(--shadow-sm);
     }
     .bookmark-btn.active {
       color: var(--accent);
       border-color: var(--accent);
-      background: rgba(217, 4, 41, 0.08);
+      background: rgba(var(--accent-rgb), 0.12);
     }
     .card-avatar {
       width: 76px;
@@ -634,7 +666,7 @@
       position: relative;
       z-index: 2;
       box-shadow: var(--shadow-sm);
-      background: #E2E8F0;
+      background: var(--bg-input);
     }
     .card-body {
       padding: 46px 20px 20px;
@@ -662,7 +694,7 @@
     }
     .card-profession {
       font-size: 0.85rem;
-      color: var(--accent);
+      color: var(--primary);
       font-weight: 600;
       margin-bottom: 12px;
       display: flex;
@@ -682,6 +714,7 @@
       border-radius: var(--radius-md);
       padding: 10px 14px;
       margin-bottom: 14px;
+      border: 1px solid var(--border-color);
     }
     .budget-title {
       font-size: 0.72rem;
@@ -690,7 +723,7 @@
       color: var(--text-muted);
     }
     .budget-amount {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--text-main);
     }
@@ -707,6 +740,7 @@
       color: var(--text-muted);
       padding: 4px 8px;
       border-radius: 6px;
+      border: 1px solid var(--border-color);
     }
     .card-desc {
       font-size: 0.85rem;
@@ -725,7 +759,7 @@
       gap: 10px;
     }
     .card-actions .btn {
-      padding: 8px 12px;
+      padding: 9px 12px;
       font-size: 0.84rem;
     }
 
@@ -735,7 +769,7 @@
       text-align: center;
       padding: 60px 20px;
       background: var(--bg-surface);
-      border: 1px dashed var(--border-color);
+      border: 1.5px dashed var(--border-color);
       border-radius: var(--radius-lg);
     }
     .empty-state i {
@@ -841,7 +875,7 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 36px 28px;
+      padding: 40px 28px;
       text-align: center;
       position: relative;
       box-shadow: var(--shadow-sm);
@@ -850,6 +884,7 @@
     .step-card:hover {
       transform: translateY(-8px);
       box-shadow: var(--shadow-md);
+      border-color: var(--primary);
     }
     .step-num {
       position: absolute;
@@ -858,20 +893,20 @@
       transform: translateX(-50%);
       width: 36px;
       height: 36px;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--primary), #8B5CF6);
       color: #FFF;
       font-weight: 800;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(217, 4, 41, 0.35);
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
     }
     .step-icon-wrap {
       width: 74px;
       height: 74px;
-      background: rgba(var(--primary-rgb), 0.15);
-      color: var(--primary-hover);
+      background: rgba(var(--primary-rgb), 0.12);
+      color: var(--primary);
       border-radius: 20px;
       margin: 16px auto 24px auto;
       display: flex;
@@ -894,12 +929,13 @@
        ========================================================================== */
     .safety-section {
       padding: 80px 0;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.98)),
-                  radial-gradient(circle at 100% 0%, rgba(217, 4, 41, 0.3), transparent 60%);
+      background: linear-gradient(135deg, #0B132B 0%, #1C2541 100%);
       color: #FFF;
       border-radius: var(--radius-lg);
       margin: 20px auto 80px;
       max-width: 1240px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-lg);
     }
     .safety-grid {
       display: grid;
@@ -908,15 +944,15 @@
       margin-top: 40px;
     }
     .safety-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
       padding: 24px;
       text-align: left;
       transition: var(--transition);
     }
     .safety-box:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       transform: translateY(-4px);
     }
     .safety-box i {
@@ -954,6 +990,11 @@
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
+      transition: var(--transition);
+    }
+    .testi-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
     }
     .testi-stars {
       color: #F59E0B;
@@ -977,6 +1018,7 @@
       height: 48px;
       border-radius: 50%;
       object-fit: cover;
+      border: 2px solid var(--primary);
     }
     .testi-name {
       font-weight: 800;
@@ -984,7 +1026,7 @@
     }
     .testi-loc {
       font-size: 0.8rem;
-      color: var(--accent);
+      color: var(--primary);
       font-weight: 600;
     }
 
@@ -1021,7 +1063,7 @@
       user-select: none;
     }
     .faq-question i {
-      color: var(--accent);
+      color: var(--primary);
       transition: transform 0.3s ease;
     }
     .faq-item.active .faq-question i {
@@ -1045,7 +1087,7 @@
        FOOTER
        ========================================================================== */
     .footer {
-      background: #0B1120;
+      background: #060911;
       color: #94A3B8;
       padding: 70px 0 30px;
       border-top: 1px solid #1E293B;
@@ -1073,18 +1115,20 @@
     .social-link {
       width: 38px;
       height: 38px;
-      background: #1E293B;
+      background: #131D31;
       color: #FFF;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
     .social-link:hover {
       background: var(--primary);
-      color: #0F172A;
+      color: #FFF;
       transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(var(--primary-rgb), 0.4);
     }
     .footer-col h5 {
       color: #FFF;
@@ -1107,7 +1151,7 @@
       padding-left: 4px;
     }
     .footer-bottom {
-      border-top: 1px solid #1E293B;
+      border-top: 1px solid #131D31;
       padding-top: 24px;
       display: flex;
       justify-content: space-between;
@@ -1121,8 +1165,8 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(6px);
+      background: rgba(7, 11, 20, 0.75);
+      backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
       align-items: center;
@@ -1168,6 +1212,11 @@
       cursor: pointer;
       z-index: 10;
       font-size: 1rem;
+      transition: var(--transition);
+    }
+    .modal-close:hover {
+      background: var(--bg-input);
+      transform: rotate(90deg);
     }
     .modal-hero {
       background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -1186,7 +1235,8 @@
       border-radius: 50%;
       border: 4px solid var(--bg-card);
       object-fit: cover;
-      background: #E2E8F0;
+      background: var(--bg-input);
+      box-shadow: var(--shadow-md);
     }
     .modal-content-area {
       padding: 24px 28px 32px;
@@ -1201,6 +1251,7 @@
       background: var(--bg-input);
       padding: 10px 14px;
       border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
     }
     .modal-meta-label {
       font-size: 0.72rem;
@@ -1214,9 +1265,7 @@
       color: var(--text-main);
     }
 
-    /* ==========================================================================
-       LOGIN & SIGNUP MODAL SPECIFIC STYLES
-       ========================================================================== */
+    /* Auth Modal Specific */
     .auth-modal-card {
       max-width: 440px;
       padding: 32px;
@@ -1269,7 +1318,7 @@
     }
     .btn-social:hover {
       background: var(--bg-input);
-      border-color: var(--text-muted);
+      border-color: var(--primary);
     }
     .btn-google i {
       color: #EA4335;
@@ -1358,6 +1407,7 @@
       align-items: center;
       gap: 10px;
       z-index: 3000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .toast-msg.show {
@@ -1436,7 +1486,7 @@
   <nav class="navbar">
     <div class="container nav-container">
       <a href="#" class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-hotel"></i></div>
+        <div class="brand-icon"><i class="fa-solid fa-shapes"></i></div>
         FlatMate <span>Kolkata</span>
       </a>
 
@@ -1468,15 +1518,15 @@
   <section class="hero" id="home">
     <div class="container hero-content">
       <div class="kolkata-badge">
-        <i class="fa-solid fa-location-dot"></i> City of Joy's #1 Flatmate Network
+        <i class="fa-solid fa-compass"></i> City of Joy's Modern Flatmate Network
       </div>
-      <h1>Find the Perfect <span>Flatmate</span> in Kolkata</h1>
-      <p>Connect with 10,000+ verified professionals and students looking for shared flats in Salt Lake, New Town, Park Street, and beyond.</p>
+      <h1>Find Your Ideal <span>Flatmate</span> in Kolkata</h1>
+      <p>Connect directly with 10,000+ verified techies, creatives, and students across Salt Lake, New Town, Park Street, and South Kolkata.</p>
 
       <!-- Hero Search Bar -->
       <div class="hero-search-box">
         <div class="search-group">
-          <i class="fa-solid fa-map-pin"></i>
+          <i class="fa-solid fa-location-dot"></i>
           <div class="search-input-wrap">
             <label>Location</label>
             <select id="heroLocationSelect">
@@ -1511,7 +1561,7 @@
         </div>
 
         <div class="search-group">
-          <i class="fa-solid fa-users"></i>
+          <i class="fa-solid fa-user-group"></i>
           <div class="search-input-wrap">
             <label>Looking For</label>
             <select id="heroGenderSelect">
@@ -1529,7 +1579,7 @@
 
       <!-- Quick Location Chips -->
       <div class="hero-popular-chips">
-        <span>Popular:</span>
+        <span>Hotspots:</span>
         <div class="chip" onclick="quickFilterLocation('New Town')">New Town</div>
         <div class="chip" onclick="quickFilterLocation('Salt Lake')">Salt Lake</div>
         <div class="chip" onclick="quickFilterLocation('Sector V')">Sector V</div>
@@ -1545,9 +1595,9 @@
   <section class="listings-section" id="listings">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-tag">Verified Matches</span>
-        <h2 class="section-title">Explore Compatible Flatmates</h2>
-        <p class="section-subtitle">Real people with matching lifestyles, budgets, and location preferences across Kolkata.</p>
+        <span class="section-tag"><i class="fa-solid fa-circle-check"></i> Live Listings</span>
+        <h2 class="section-title">Verified Flatmate Matches</h2>
+        <p class="section-subtitle">Browse transparent profiles with verified identities, accurate budgets, and clear lifestyle choices.</p>
       </div>
 
       <div class="listings-layout">
@@ -1658,9 +1708,9 @@
   <section class="post-section" id="post">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-tag">Find A Roommate Fast</span>
+        <span class="section-tag"><i class="fa-solid fa-bolt"></i> Fast Match</span>
         <h2 class="section-title">Post Your Requirement</h2>
-        <p class="section-subtitle">Looking for someone to share your flat or searching for a room? Post your requirement for free.</p>
+        <p class="section-subtitle">Looking for someone to share your flat or searching for a vacant room? List your requirement instantly.</p>
       </div>
 
       <div class="form-container">
@@ -1736,7 +1786,7 @@
 
             <div class="form-group full">
               <label for="postAbout">About Yourself & Lifestyle Preferences</label>
-              <textarea id="postAbout" class="form-control" placeholder="Tell potential flatmates about your daily schedule, cleanliness, hobbies, or food choices..."></textarea>
+              <textarea id="postAbout" class="form-control" placeholder="Tell potential flatmates about your work timings, cleanliness, hobbies, or food choices..."></textarea>
             </div>
 
             <div class="form-group full">
@@ -1756,7 +1806,7 @@
   <section class="how-section" id="how">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-tag">Seamless Process</span>
+        <span class="section-tag"><i class="fa-solid fa-route"></i> Straightforward</span>
         <h2 class="section-title">How FlatMate Kolkata Works</h2>
         <p class="section-subtitle">Finding a compatible flatmate shouldn't take weeks. Get matched in 3 simple steps.</p>
       </div>
@@ -1793,8 +1843,10 @@
     <div class="safety-section">
       <div class="container" style="padding: 0 32px;">
         <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-          <span class="section-tag" style="background: rgba(255, 183, 3, 0.2); color: var(--primary);">Peace of Mind</span>
-          <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;">Your Safety Matters To Us</h2>
+          <span class="section-tag" style="background: rgba(255, 255, 255, 0.1); color: #FFF; border-color: rgba(255, 255, 255, 0.2);">
+            <i class="fa-solid fa-shield-halved"></i> Peace of Mind
+          </span>
+          <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.3rem; font-weight: 700; margin-bottom: 12px;">Your Safety Matters To Us</h2>
           <p style="color: #94A3B8;">We implement strict verification standards to keep Kolkata's renting community secure.</p>
         </div>
 
@@ -1830,7 +1882,7 @@
   <section class="testimonials-section">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-tag">Success Stories</span>
+        <span class="section-tag"><i class="fa-solid fa-heart"></i> Stories</span>
         <h2 class="section-title">Loved by Kolkata's Renters</h2>
         <p class="section-subtitle">Real feedback from professionals and university students who found great homes.</p>
       </div>
@@ -1887,7 +1939,7 @@
   <section class="faq-section" id="faq">
     <div class="container">
       <div class="section-title-wrap">
-        <span class="section-tag">Got Questions?</span>
+        <span class="section-tag"><i class="fa-solid fa-circle-question"></i> FAQs</span>
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="section-subtitle">Everything you need to know about finding flatmates across Kolkata.</p>
       </div>
@@ -1944,10 +1996,10 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="brand">
-            <div class="brand-icon"><i class="fa-solid fa-hotel"></i></div>
+            <div class="brand-icon"><i class="fa-solid fa-shapes"></i></div>
             FlatMate <span>Kolkata</span>
           </div>
-          <p class="footer-desc">Kolkata’s dedicated community platform making shared living simple, safe, and broker-free.</p>
+          <p class="footer-desc">Kolkata’s dedicated community platform making shared living modern, safe, and broker-free.</p>
           <div class="social-links">
             <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -2060,7 +2112,7 @@
         <img src="" alt="Profile" class="modal-avatar" id="modalAvatar">
         <div>
           <h3 id="modalName" style="font-size: 1.4rem; font-weight: 800;"></h3>
-          <p id="modalSub" style="font-size: 0.88rem; color: var(--accent); font-weight: 600;"></p>
+          <p id="modalSub" style="font-size: 0.88rem; color: var(--primary); font-weight: 600;"></p>
         </div>
       </div>
 
@@ -2107,7 +2159,7 @@
 
   <!-- Toast Notification Container -->
   <div class="toast-msg" id="toastBox">
-    <i class="fa-solid fa-circle-check" style="color: #10B981;"></i>
+    <i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i>
     <span id="toastText">Action completed successfully!</span>
   </div>
 
@@ -2115,14 +2167,8 @@
        JAVASCRIPT: LOCAL DATA, AUTH, WHATSAPP REDIRECTION & FILTERS
        ========================================================================== -->
   <script>
-    /* --------------------------------------------------------------------------
-       WHATSAPP DISPATCH DESTINATION (KOLKATA MATCHING LINE)
-       -------------------------------------------------------------------------- */
     const WHATSAPP_CONTACT_NUMBER = "919907464271";
 
-    /* --------------------------------------------------------------------------
-       1. SAMPLE DATA: 10 Realistic Kolkata Flatmate Profiles
-       -------------------------------------------------------------------------- */
     const flatmateData = [
       {
         id: 1,
@@ -2312,9 +2358,6 @@
     let loggedInUser = null;
     let currentAuthMode = 'login';
 
-    /* --------------------------------------------------------------------------
-       2. DOM ELEMENTS
-       -------------------------------------------------------------------------- */
     const flatmatesGrid = document.getElementById('flatmatesGrid');
     const matchCountEl = document.getElementById('matchCount');
     const loadMoreWrap = document.getElementById('loadMoreWrap');
@@ -2365,7 +2408,7 @@
     const toastText = document.getElementById('toastText');
 
     /* --------------------------------------------------------------------------
-       3. RENDER PROFILES TO GRID
+       RENDER PROFILES
        -------------------------------------------------------------------------- */
     function renderProfiles() {
       flatmatesGrid.innerHTML = '';
@@ -2413,9 +2456,9 @@
             </div>
             <div class="card-tags">
               <span class="mini-tag"><i class="fa-solid fa-user-group"></i> ${profile.lookingFor}</span>
-              ${profile.veg ? '<span class="mini-tag"><i class="fa-solid fa-leaf" style="color:#10B981;"></i> Veg</span>' : ''}
+              ${profile.veg ? '<span class="mini-tag"><i class="fa-solid fa-leaf" style="color:var(--emerald);"></i> Veg</span>' : ''}
               ${profile.nonSmoker ? '<span class="mini-tag"><i class="fa-solid fa-ban-smoking"></i> Non-Smoker</span>' : ''}
-              ${profile.petFriendly ? '<span class="mini-tag"><i class="fa-solid fa-paw" style="color:var(--primary-hover)"></i> Pet Friendly</span>' : ''}
+              ${profile.petFriendly ? '<span class="mini-tag"><i class="fa-solid fa-paw" style="color:var(--primary);"></i> Pet Friendly</span>' : ''}
             </div>
             <p class="card-desc">${profile.desc}</p>
             <div class="card-actions">
@@ -2432,7 +2475,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       4. FILTERING & SORTING LOGIC
+       FILTERING & SORTING LOGIC
        -------------------------------------------------------------------------- */
     function applyFilters() {
       const loc = filterLocation.value;
@@ -2493,7 +2536,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       5. AUTHENTICATION (GOOGLE, FACEBOOK, EMAIL)
+       AUTH LOGIC
        -------------------------------------------------------------------------- */
     function openAuthModal() {
       if (loggedInUser) {
@@ -2552,7 +2595,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       6. PROFILE MODAL & WHATSAPP REDIRECTION (9907464271)
+       MODAL & WHATSAPP REDIRECTION
        -------------------------------------------------------------------------- */
     function openProfileModal(id) {
       const profile = flatmateData.find(p => p.id === id);
@@ -2584,7 +2627,7 @@
 
     function dispatchWhatsAppContact(profile, customNote = "") {
       const senderInfo = loggedInUser ? `Sender: ${loggedInUser.name} (${loggedInUser.email})` : "Sender: Website Visitor";
-      const message = `Hello FlatMate Kolkata! 🏡\n\nI want to connect with the following flatmate profile:\n• Name: ${profile.name} (${profile.age} yrs, ${profile.gender})\n• Location: ${profile.location}, Kolkata\n• Budget: ₹${profile.budget.toLocaleString('en-IN')}/mo\n• Profession: ${profile.profession}\n• Preference: ${profile.lookingFor}\n${customNote ? `• Message: ${customNote}\n` : ''}\n${senderInfo}\n\nPlease help connect us!`;
+      const message = `Hello FlatMate Kolkata! 🏡\n\nI want to connect with the following flatmate profile:\n• Name: ${profile.name} (${profile.age} yrs, ${profile.gender})\n• Location: ${profile.location}, Kolkata\n• Budget: ₹${profile.budget.toLocaleString('en-IN')}/mo\n• Profession: ${profile.profession}\n• Preference: ${profile.lookingFor}\n${customNote ? `• Note: ${customNote}\n` : ''}\n${senderInfo}\n\nPlease help connect us!`;
       
       const whatsappUrl = `https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
@@ -2614,7 +2657,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       7. BOOKMARKS & TOAST
+       BOOKMARKS & TOAST
        -------------------------------------------------------------------------- */
     function toggleBookmark(id, btnElement) {
       const target = flatmateData.find(p => p.id === id);
@@ -2636,7 +2679,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       8. POST REQUIREMENT FORM VALIDATION & SUBMISSION
+       POST REQUIREMENT FORM VALIDATION
        -------------------------------------------------------------------------- */
     postForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -2691,7 +2734,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       9. HERO SEARCH SYNC WITH SIDEBAR FILTERS
+       HERO SEARCH SYNC
        -------------------------------------------------------------------------- */
     heroSearchBtn.addEventListener('click', () => {
       filterLocation.value = heroLocationSelect.value;
@@ -2704,7 +2747,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       10. THEME TOGGLE (DARK / LIGHT)
+       THEME TOGGLE
        -------------------------------------------------------------------------- */
     themeToggleBtn.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -2718,7 +2761,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       11. ACCORDION & MOBILE NAVIGATION
+       ACCORDION & MOBILE NAVIGATION
        -------------------------------------------------------------------------- */
     document.querySelectorAll('.faq-item').forEach(item => {
       item.querySelector('.faq-question').addEventListener('click', () => {
