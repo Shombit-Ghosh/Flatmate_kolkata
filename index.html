@@ -13,7 +13,7 @@
 
   <style>
     /* ==========================================================================
-       MODERNIZED DESIGN SYSTEM & CSS VARIABLES
+       MODERNIZED CREATIVE DESIGN SYSTEM & CSS VARIABLES
        ========================================================================== */
     :root {
       /* Brand Accents */
@@ -24,6 +24,8 @@
       --accent-hover: #E11D48;
       --accent-rgb: 244, 63, 94;
       --emerald: #10B981;
+      --amber: #F59E0B;
+      --cyan: #06B6D4;
 
       /* Light Theme Surface Layers */
       --bg-body: #F8FAFC;
@@ -35,39 +37,47 @@
       --border-color: #E2E8F0;
       
       /* Glassmorphism & Elevation */
-      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-bg: rgba(255, 255, 255, 0.82);
       --glass-border: rgba(255, 255, 255, 0.7);
-      --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+      --shadow-sm: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 14px 30px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
       --shadow-lg: 0 24px 48px -12px rgba(15, 23, 42, 0.14);
-      --hero-glow-1: rgba(99, 102, 241, 0.12);
-      --hero-glow-2: rgba(244, 63, 94, 0.09);
+      
+      /* Creative Glows */
+      --hero-glow-1: rgba(99, 102, 241, 0.16);
+      --hero-glow-2: rgba(244, 63, 94, 0.12);
+      --hero-glow-3: rgba(6, 182, 212, 0.12);
+      --card-highlight: rgba(255, 255, 255, 0.9);
 
       --radius-sm: 10px;
       --radius-md: 16px;
       --radius-lg: 24px;
       --radius-full: 9999px;
-      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       --header-h: 76px;
     }
 
     [data-theme="dark"] {
       /* Dark Theme Surfaces: Ultra-Modern Obsidian & Deep Slate */
-      --bg-body: #070B14;
+      --bg-body: #060911;
       --bg-surface: #0E1626;
-      --bg-card: #111C31;
-      --bg-input: #1A263D;
+      --bg-card: #101B2E;
+      --bg-input: #172338;
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
       --border-color: #1E293B;
 
-      --glass-bg: rgba(14, 22, 38, 0.85);
+      --glass-bg: rgba(14, 22, 38, 0.82);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
-      --shadow-md: 0 16px 36px -8px rgba(0, 0, 0, 0.65);
-      --shadow-lg: 0 28px 56px -12px rgba(0, 0, 0, 0.8);
-      --hero-glow-1: rgba(99, 102, 241, 0.22);
-      --hero-glow-2: rgba(244, 63, 94, 0.18);
+      --shadow-sm: 0 4px 14px -2px rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
+      --shadow-lg: 0 28px 56px -12px rgba(0, 0, 0, 0.85);
+      
+      /* Dark Theme Glowing Orbs */
+      --hero-glow-1: rgba(99, 102, 241, 0.28);
+      --hero-glow-2: rgba(244, 63, 94, 0.22);
+      --hero-glow-3: rgba(6, 182, 212, 0.2);
+      --card-highlight: rgba(255, 255, 255, 0.05);
     }
 
     /* ==========================================================================
@@ -86,8 +96,9 @@
       background-color: var(--bg-body);
       color: var(--text-main);
       line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.4s ease, color 0.4s ease;
       overflow-x: hidden;
+      position: relative;
     }
     a {
       text-decoration: none;
@@ -126,6 +137,7 @@
       padding: 6px 14px;
       border-radius: var(--radius-full);
       margin-bottom: 14px;
+      backdrop-filter: blur(8px);
     }
     .section-title {
       font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
@@ -140,6 +152,75 @@
     }
 
     /* ==========================================================================
+       KEYFRAME ANIMATIONS
+       ========================================================================== */
+    @keyframes floatBlob {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.08); }
+      66% { transform: translate(-25px, 25px) scale(0.94); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 12px rgba(var(--primary-rgb), 0.6)); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Ambient background canvas blobs */
+    .bg-blobs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.55;
+      animation: floatBlob 14s infinite ease-in-out;
+    }
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 500px;
+      height: 500px;
+      background: var(--hero-glow-1);
+    }
+    .blob-2 {
+      bottom: 15%;
+      left: -10%;
+      width: 550px;
+      height: 550px;
+      background: var(--hero-glow-2);
+      animation-delay: -5s;
+    }
+    .blob-3 {
+      top: 40%;
+      right: 20%;
+      width: 400px;
+      height: 400px;
+      background: var(--hero-glow-3);
+      animation-delay: -9s;
+    }
+
+    /* ==========================================================================
        NAVBAR (Glassmorphic)
        ========================================================================== */
     .navbar {
@@ -147,8 +228,8 @@
       top: 0;
       z-index: 1000;
       background: var(--glass-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-color);
       height: var(--header-h);
       display: flex;
@@ -182,6 +263,7 @@
       border-radius: 12px;
       font-size: 1.15rem;
       box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.4);
+      animation: pulseGlow 4s infinite ease-in-out;
     }
     .brand span {
       background: linear-gradient(135deg, var(--accent) 0%, #FB7185 100%);
@@ -211,7 +293,7 @@
       left: 0;
       width: 100%;
       height: 2.5px;
-      background: var(--primary);
+      background: linear-gradient(90deg, var(--primary), var(--accent));
       border-radius: 4px;
     }
     .nav-actions {
@@ -234,8 +316,9 @@
       transition: var(--transition);
     }
     .theme-toggle-btn:hover {
-      transform: scale(1.06);
+      transform: rotate(20deg) scale(1.08);
       border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
     }
     .btn {
       display: inline-flex;
@@ -249,6 +332,8 @@
       cursor: pointer;
       border: none;
       transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
@@ -257,7 +342,7 @@
     }
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.45);
+      box-shadow: 0 8px 22px rgba(var(--primary-rgb), 0.5);
     }
     .btn-accent {
       background: linear-gradient(135deg, var(--accent) 0%, #E11D48 100%);
@@ -266,7 +351,7 @@
     }
     .btn-accent:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.45);
+      box-shadow: 0 8px 22px rgba(var(--accent-rgb), 0.5);
     }
     .btn-outline {
       background: var(--bg-surface);
@@ -276,6 +361,7 @@
     .btn-outline:hover {
       background: var(--bg-input);
       border-color: var(--primary);
+      transform: translateY(-2px);
     }
     .hamburger {
       display: none;
@@ -292,8 +378,6 @@
     .hero {
       position: relative;
       padding: 90px 0 110px;
-      background: radial-gradient(circle at 85% 15%, var(--hero-glow-1), transparent 45%),
-                  radial-gradient(circle at 15% 85%, var(--hero-glow-2), transparent 50%);
       overflow: hidden;
     }
     .hero-content {
@@ -320,14 +404,16 @@
     }
     .hero h1 {
       font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-      font-size: 3.5rem;
+      font-size: 3.6rem;
       font-weight: 700;
       line-height: 1.15;
       letter-spacing: -1.2px;
       margin-bottom: 22px;
     }
     .hero h1 span {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, #EC4899 50%, var(--accent) 100%);
+      background-size: 200% auto;
+      animation: gradientShift 6s ease infinite;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -340,7 +426,7 @@
       margin-right: auto;
     }
 
-    /* Modernized Hero Search Card */
+    /* Modern Hero Search Card */
     .hero-search-box {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -351,6 +437,10 @@
       grid-template-columns: 1.4fr 1.1fr 1.1fr auto;
       gap: 12px;
       align-items: center;
+      transition: var(--transition);
+    }
+    .hero-search-box:hover {
+      border-color: rgba(var(--primary-rgb), 0.3);
     }
     .search-group {
       display: flex;
@@ -425,11 +515,11 @@
       transition: var(--transition);
     }
     .chip:hover {
-      background: var(--primary);
-      border-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), #8B5CF6);
+      border-color: transparent;
       color: #FFF;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(var(--primary-rgb), 0.35);
     }
 
     /* ==========================================================================
@@ -593,27 +683,28 @@
       gap: 24px;
     }
 
-    /* Modern Flatmate Profile Card */
+    /* Flatmate Profile Card with 3D Tilt & Light Flare */
     .flatmate-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
-      transition: var(--transition);
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out, border-color 0.25s ease-out;
       display: flex;
       flex-direction: column;
       position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
     .flatmate-card:hover {
-      transform: translateY(-6px);
       box-shadow: var(--shadow-md);
-      border-color: var(--primary);
+      border-color: rgba(var(--primary-rgb), 0.5);
     }
     .card-top {
       position: relative;
       height: 120px;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(244, 63, 94, 0.2));
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(244, 63, 94, 0.25));
       display: flex;
       align-items: flex-end;
       padding: 16px 20px;
@@ -651,6 +742,9 @@
       transition: var(--transition);
       box-shadow: var(--shadow-sm);
     }
+    .bookmark-btn:hover {
+      transform: scale(1.1);
+    }
     .bookmark-btn.active {
       color: var(--accent);
       border-color: var(--accent);
@@ -667,6 +761,10 @@
       z-index: 2;
       box-shadow: var(--shadow-sm);
       background: var(--bg-input);
+      transition: transform 0.3s ease;
+    }
+    .flatmate-card:hover .card-avatar {
+      transform: scale(1.05);
     }
     .card-body {
       padding: 46px 20px 20px;
@@ -715,6 +813,10 @@
       padding: 10px 14px;
       margin-bottom: 14px;
       border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .flatmate-card:hover .card-budget {
+      border-color: rgba(var(--primary-rgb), 0.3);
     }
     .budget-title {
       font-size: 0.72rem;
@@ -808,6 +910,7 @@
       border-radius: var(--radius-lg);
       padding: 40px;
       box-shadow: var(--shadow-md);
+      position: relative;
     }
     .post-form-grid {
       display: grid;
@@ -913,6 +1016,10 @@
       align-items: center;
       justify-content: center;
       font-size: 1.8rem;
+      transition: transform 0.3s ease;
+    }
+    .step-card:hover .step-icon-wrap {
+      transform: scale(1.1) rotate(5deg);
     }
     .step-card h3 {
       font-size: 1.25rem;
@@ -936,6 +1043,8 @@
       max-width: 1240px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
     }
     .safety-grid {
       display: grid;
@@ -950,10 +1059,12 @@
       padding: 24px;
       text-align: left;
       transition: var(--transition);
+      backdrop-filter: blur(8px);
     }
     .safety-box:hover {
       background: rgba(255, 255, 255, 0.08);
       transform: translateY(-4px);
+      border-color: rgba(var(--primary-rgb), 0.4);
     }
     .safety-box i {
       font-size: 1.6rem;
@@ -994,10 +1105,11 @@
     }
     .testi-card:hover {
       border-color: var(--primary);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
     }
     .testi-stars {
-      color: #F59E0B;
+      color: var(--amber);
       font-size: 0.9rem;
       margin-bottom: 16px;
     }
@@ -1051,6 +1163,9 @@
       overflow: hidden;
       background: var(--bg-card);
       transition: var(--transition);
+    }
+    .faq-item:hover {
+      border-color: rgba(var(--primary-rgb), 0.4);
     }
     .faq-question {
       padding: 18px 24px;
@@ -1165,8 +1280,8 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(7, 11, 20, 0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(7, 11, 20, 0.78);
+      backdrop-filter: blur(10px);
       z-index: 2000;
       display: flex;
       align-items: center;
@@ -1190,11 +1305,11 @@
       overflow-y: auto;
       box-shadow: var(--shadow-lg);
       position: relative;
-      transform: scale(0.95);
+      transform: scale(0.92) translateY(20px);
       transition: var(--transition);
     }
     .modal-overlay.active .modal-card {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
     }
     .modal-close {
       position: absolute;
@@ -1368,9 +1483,10 @@
       z-index: 999;
       cursor: pointer;
       transition: var(--transition);
+      animation: pulseGlow 5s infinite;
     }
     .floating-wa:hover {
-      transform: scale(1.1) translateY(-4px);
+      transform: scale(1.12) translateY(-4px);
     }
     .wa-tooltip {
       position: absolute;
@@ -1480,6 +1596,13 @@
 </head>
 <body>
 
+  <!-- Ambient background glowing blobs -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
   <!-- ==========================================================================
        NAVIGATION BAR
        ========================================================================== -->
@@ -1515,7 +1638,7 @@
   <!-- ==========================================================================
        HERO SECTION
        ========================================================================== -->
-  <section class="hero" id="home">
+  <section class="hero reveal" id="home">
     <div class="container hero-content">
       <div class="kolkata-badge">
         <i class="fa-solid fa-compass"></i> City of Joy's Modern Flatmate Network
@@ -1594,7 +1717,7 @@
        ========================================================================== -->
   <section class="listings-section" id="listings">
     <div class="container">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap reveal">
         <span class="section-tag"><i class="fa-solid fa-circle-check"></i> Live Listings</span>
         <h2 class="section-title">Verified Flatmate Matches</h2>
         <p class="section-subtitle">Browse transparent profiles with verified identities, accurate budgets, and clear lifestyle choices.</p>
@@ -1602,7 +1725,7 @@
 
       <div class="listings-layout">
         <!-- Sidebar Filters -->
-        <aside class="filters-sidebar">
+        <aside class="filters-sidebar reveal">
           <div class="filter-header">
             <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
             <button class="filter-reset" id="resetFiltersBtn">Reset All</button>
@@ -1674,7 +1797,7 @@
 
         <!-- Listings Main Area -->
         <main class="listings-main">
-          <div class="listings-header">
+          <div class="listings-header reveal">
             <div class="results-count">
               Showing <span id="matchCount">0</span> flatmates in Kolkata
             </div>
@@ -1707,13 +1830,13 @@
        ========================================================================== -->
   <section class="post-section" id="post">
     <div class="container">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap reveal">
         <span class="section-tag"><i class="fa-solid fa-bolt"></i> Fast Match</span>
         <h2 class="section-title">Post Your Requirement</h2>
         <p class="section-subtitle">Looking for someone to share your flat or searching for a vacant room? List your requirement instantly.</p>
       </div>
 
-      <div class="form-container">
+      <div class="form-container reveal">
         <form id="postRequirementForm" novalidate>
           <div class="post-form-grid">
             <div class="form-group">
@@ -1805,28 +1928,28 @@
        ========================================================================== -->
   <section class="how-section" id="how">
     <div class="container">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap reveal">
         <span class="section-tag"><i class="fa-solid fa-route"></i> Straightforward</span>
         <h2 class="section-title">How FlatMate Kolkata Works</h2>
         <p class="section-subtitle">Finding a compatible flatmate shouldn't take weeks. Get matched in 3 simple steps.</p>
       </div>
 
       <div class="steps-grid">
-        <div class="step-card">
+        <div class="step-card reveal">
           <div class="step-num">1</div>
           <div class="step-icon-wrap"><i class="fa-regular fa-id-badge"></i></div>
           <h3>Create Your Profile</h3>
           <p>Share your budget, preferred Kolkata neighborhood, workplace, and lifestyle preferences in under 2 minutes.</p>
         </div>
 
-        <div class="step-card">
+        <div class="step-card reveal" style="transition-delay: 0.15s;">
           <div class="step-num">2</div>
           <div class="step-icon-wrap"><i class="fa-solid fa-sliders"></i></div>
           <h3>Filter & Discover</h3>
           <p>Browse through verified listings matching your budget, dietary habits, work shifts, and pet preferences.</p>
         </div>
 
-        <div class="step-card">
+        <div class="step-card reveal" style="transition-delay: 0.3s;">
           <div class="step-num">3</div>
           <div class="step-icon-wrap"><i class="fa-solid fa-handshake-angle"></i></div>
           <h3>Connect & Move In</h3>
@@ -1840,7 +1963,7 @@
        SAFETY & VERIFICATION
        ========================================================================== -->
   <section class="container">
-    <div class="safety-section">
+    <div class="safety-section reveal">
       <div class="container" style="padding: 0 32px;">
         <div style="text-align: center; max-width: 600px; margin: 0 auto;">
           <span class="section-tag" style="background: rgba(255, 255, 255, 0.1); color: #FFF; border-color: rgba(255, 255, 255, 0.2);">
@@ -1881,14 +2004,14 @@
        ========================================================================== -->
   <section class="testimonials-section">
     <div class="container">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap reveal">
         <span class="section-tag"><i class="fa-solid fa-heart"></i> Stories</span>
         <h2 class="section-title">Loved by Kolkata's Renters</h2>
         <p class="section-subtitle">Real feedback from professionals and university students who found great homes.</p>
       </div>
 
       <div class="testimonials-grid">
-        <div class="testi-card">
+        <div class="testi-card reveal">
           <div class="testi-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
@@ -1902,7 +2025,7 @@
           </div>
         </div>
 
-        <div class="testi-card">
+        <div class="testi-card reveal" style="transition-delay: 0.15s;">
           <div class="testi-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
@@ -1916,7 +2039,7 @@
           </div>
         </div>
 
-        <div class="testi-card">
+        <div class="testi-card reveal" style="transition-delay: 0.3s;">
           <div class="testi-stars">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
@@ -1938,13 +2061,13 @@
        ========================================================================== -->
   <section class="faq-section" id="faq">
     <div class="container">
-      <div class="section-title-wrap">
+      <div class="section-title-wrap reveal">
         <span class="section-tag"><i class="fa-solid fa-circle-question"></i> FAQs</span>
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="section-subtitle">Everything you need to know about finding flatmates across Kolkata.</p>
       </div>
 
-      <div class="faq-wrap">
+      <div class="faq-wrap reveal">
         <div class="faq-item active">
           <div class="faq-question">
             <span>Is FlatMate Kolkata completely free to use?</span>
@@ -2408,6 +2531,32 @@
     const toastText = document.getElementById('toastText');
 
     /* --------------------------------------------------------------------------
+       CARD 3D TILT EFFECT ATTACHER
+       -------------------------------------------------------------------------- */
+    function attachTiltEffects() {
+      const cards = document.querySelectorAll('.flatmate-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = ((y - centerY) / centerY) * -7;
+          const rotateY = ((x - centerX) / centerX) * 7;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        });
+      });
+    }
+
+    /* --------------------------------------------------------------------------
        RENDER PROFILES
        -------------------------------------------------------------------------- */
     function renderProfiles() {
@@ -2416,7 +2565,7 @@
 
       if (visibleList.length === 0) {
         flatmatesGrid.innerHTML = `
-          <div class="empty-state">
+          <div class="empty-state reveal active">
             <i class="fa-solid fa-user-slash"></i>
             <h4>No Flatmates Found</h4>
             <p>Try widening your budget slider or choosing another Kolkata locality.</p>
@@ -2428,9 +2577,10 @@
         return;
       }
 
-      visibleList.forEach(profile => {
+      visibleList.forEach((profile, idx) => {
         const card = document.createElement('div');
-        card.className = 'flatmate-card';
+        card.className = 'flatmate-card reveal active';
+        card.style.transitionDelay = `${idx * 0.08}s`;
         card.innerHTML = `
           <div class="card-top">
             <div class="verified-tag"><i class="fa-solid fa-circle-check"></i> Verified</div>
@@ -2472,6 +2622,7 @@
 
       matchCountEl.textContent = currentProfiles.length;
       loadMoreWrap.style.display = displayedCount >= currentProfiles.length ? 'none' : 'block';
+      attachTiltEffects();
     }
 
     /* --------------------------------------------------------------------------
@@ -2724,7 +2875,6 @@
       currentProfiles.unshift(newPost);
       renderProfiles();
 
-      // Dispatch to WhatsApp
       const postMsg = `*New Flatmate Requirement Posted!*\n\n• Name: ${newPost.name} (${newPost.age}, ${newPost.gender})\n• Location: ${newPost.location}, Kolkata\n• Budget: ₹${newPost.budget.toLocaleString('en-IN')}/mo\n• Profession: ${newPost.profession}\n• Looking for: ${newPost.lookingFor}\n• About: ${newPost.desc}`;
       window.open(`https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent(postMsg)}`, '_blank');
 
@@ -2747,7 +2897,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       THEME TOGGLE
+       THEME TOGGLE (DARK / LIGHT)
        -------------------------------------------------------------------------- */
     themeToggleBtn.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -2796,6 +2946,23 @@
     filterPetFriendly.addEventListener('change', applyFilters);
     sortSelect.addEventListener('change', applyFilters);
     resetFiltersBtn.addEventListener('click', resetFilters);
+
+    /* --------------------------------------------------------------------------
+       SCROLL REVEAL OBSERVER
+       -------------------------------------------------------------------------- */
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
 
     // Initial render
     renderProfiles();
